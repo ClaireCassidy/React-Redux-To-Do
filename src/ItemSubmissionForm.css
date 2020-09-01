@@ -1,3 +1,140 @@
 .FormContainer {
-    border: 1px solid orange;
+    /* border-bottom: 2px double rgb(141, 153, 174); */
+    padding: 10px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
 }
+
+.SubmitHeader {
+    /* padding-bottom: 5px; */
+    margin-bottom: 20px;
+    margin-top: 0px;
+    /* border: 1px solid blue; */
+    color: rgb(217, 4, 41);
+    /* text-decoration: underline rgb(217, 4, 41) dashed; */
+    border-bottom: 1px dashed rgba(217, 4, 41, 0.5)
+}
+
+.SubmissionFormContents {
+    /* border: 1px solid green; */
+    display: flex;
+    flex-direction: row;
+}
+
+.SubmissionFormGroupLeft {
+    /* border: 1px solid purple; */
+    flex-basis: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.TodoTextEntry {
+    resize: none;
+    width: 99%;
+}
+
+.ExpiryDateContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ExpiryCheckboxContainer {
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid green; */
+}
+
+.ExpiresLabel {
+    margin-right: 5px;
+    font-size: 0.8em;
+    /* border: 1px solid red; */
+
+}
+
+/* .CheckboxExpires {
+    padding-right: 50px;
+    margin-right: 50px;
+} */
+
+.ExpiryPicker {
+    width: 50%;
+}
+
+.SubmissionFormGroupRight {
+    /* border: 1px solid brown; */
+    flex-basis: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-left: 20px;
+}
+
+.ImportantStarContainer {
+    /* border: 1px solid red; */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ImportantToggle {
+    /* margin: 0px auto 10px auto; */
+    margin: 0px;
+    font-size: 0.8em;
+    margin-top: 10px;
+    /* border: 1px solid red; */
+    /* justify-self: start; */
+}
+
+.ImportantStar {
+    /* border: 1px solid red; */
+    margin: 0px;
+    color: rgb(255, 228, 94);
+    font-size: 2em;
+}
+
+.FormSubmit{
+    margin: 0px;
+    /* border: 1px solid cyan; */
+    /* height: 50%; */
+    width: 100%;
+    margin-top: 10px;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .ExpiryDateContainer {
+        margin-top: 5px;
+        justify-content: start;
+        align-items: center;
+    }
+
+    .ExpiryPicker {
+        width: 100%;
+        margin-left: 10px;
+    }
+
+    .ExpiresLabel {
+        margin-right: 0px;
+    }
+
+    .ExpiryCheckboxContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* @media only screen and (max-width: 610px) {
+    body {
+        font-weight: 600;
+    }
+
+} */

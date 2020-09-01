@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import "./ItemSubmissionForm.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { submitNewTodo } from './Actions'
-
+import { useDispatch, useSelector } from "react-redux";
+import { submitNewTodo } from "./Actions";
 
 export default function ItemSubmissionForm() {
   const [todoText, setTodoText] = useState("");
+  const [expires, setExpires] = useState(false);
   const [expiryDate, setExpiryDate] = useState(getCurDate());
   const [important, setImportant] = useState(false);
 
   let todosList = useSelector((state) => {
     return state.todos;
-  })
+  });
 
   const handleTextAreaChange = (event) => {
     setTodoText(event.target.value);
@@ -22,11 +22,36 @@ export default function ItemSubmissionForm() {
   const handleDatePickerChange = (event) => {
     console.log(event.target.value);
     setExpiryDate(event.target.value);
-  }
+  };
 
-  const handleImportantToggle = () => {
-    setImportant(important => !important);
-  }
+  const handleSubmission = (e) => {
+    let now = new Date();
+    now.setTime(now.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
+    now = now.toISOString();
+
+    const newTodo = {
+      dateAdded: truncateISO(now),
+      listIndex: todosList.length,
+      text: todoText,
+      important: important,
+      expires: expires ? expiryDate : null,
+    };
+
+    setImportant(false);
+    setTodoText("");
+    setExpiryDate(getCurDate());
+    setExpires(false);
+
+    dispatch(submitNewTodo(newTodo));
+  };
+
+  const handleImportantToggle = (e) => {
+    setImportant((important) => !important);
+  };
+
+  const handleExpiresToggle = (e) => {
+    setExpires((expires) => !expires);
+  };
 
   const dispatch = useDispatch();
 
@@ -36,61 +61,82 @@ export default function ItemSubmissionForm() {
         onSubmit={(e) => {
           e.preventDefault();
           console.log("Submitted");
-
-        //   {
-        //     dateAdded: Date.now(),
-        //     listIndex: state.list.length,
-        //     text: "get milk",
-        //     important: true/false,
-        //     expires: [Date & time]
-        // }
-
-          //let now = new Date()
-          const newTodo = {
-            dateAdded: truncateISO((new Date()).toISOString()),
-            listIndex: todosList.length,
-            text: todoText,
-            important: important,
-            expires: expiryDate
-          }
-
-          setImportant(false);
-          setTodoText("");
-          setExpiryDate(getCurDate());
-          
-          dispatch(submitNewTodo(newTodo));
-
-
+          handleSubmission(e);
         }}
       >
-        <textarea value={todoText} onChange={handleTextAreaChange}></textarea>
-        <input
-          type="datetime-local"
-          id="expiry-date"
-          name="expiry-date"
-          value={expiryDate}
-          min={getCurDate()}
-          max={getMaxDate()}
-          onChange={handleDatePickerChange}
-          required
-        />
-        <p className="ImportantToggle" onClick={handleImportantToggle}>
-          {important && "★"}
-          {!important && "☆"}
-        </p>
-        {/* <button className="FormSubmit" type="submit" value="submit"></button> */}
-        <input type="submit" value="Submit" />
+        <h3 className="SubmitHeader">Submit a new to-do:</h3>
+        <div className="SubmissionFormContents">
+          <div className="SubmissionFormGroupLeft">
+            <textarea
+              className="TodoTextEntry"
+              value={todoText}
+              onChange={handleTextAreaChange}
+              placeholder="Today I must ..."
+            ></textarea>
+
+            <div className="ExpiryDateContainer">
+              <div className="ExpiryCheckboxContainer">
+                <label className="ExpiresLabel" for="checkboxExpires">
+                  Expires?
+                </label>
+                <input
+                  className="CheckboxExpires"
+                  type="checkbox"
+                  id="checkboxExpires"
+                  name="checkboxExpires"
+                  checked={expires}
+                  onClick={handleExpiresToggle}
+                />
+              </div>
+
+              <input
+                className="ExpiryPicker"
+                type="datetime-local"
+                id="expiry-date"
+                name="expiry-date"
+                value={expiryDate}
+                min={getCurDate()}
+                max={getMaxDate()}
+                onChange={handleDatePickerChange}
+                disabled={!expires}
+              />
+            </div>
+          </div>
+
+          <div className="SubmissionFormGroupRight">
+            {/* <p className="ImportantToggle" onClick={handleImportantToggle}>
+              Important?{" "}
+              <span className="ImportantStar">
+                {important && "★"}
+                {!important && "☆"}
+              </span>
+            </p> */}
+
+            <div className="ImportantStarContainer">
+              <p className="ImportantToggle" onClick={handleImportantToggle}>
+                Important?
+              </p>
+              <p className="ImportantStar" onClick={handleImportantToggle}>
+                {important && "★"}
+                {!important && "☆"}
+              </p>
+            </div>
+
+            <input className="FormSubmit" type="submit" value="Submit" />
+          </div>
+        </div>
       </form>
     </div>
   );
 }
 
 const getCurDate = () => {
-
   let fullDate = new Date();
 
   // adjust for daylight savings time
-  fullDate.setTime( fullDate.getTime() - new Date().getTimezoneOffset()*60*1000 );
+  fullDate.setTime(
+    fullDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000
+  );
   fullDate = fullDate.toISOString();
 
   const formattedDate = truncateISO(fullDate);
@@ -107,13 +153,14 @@ const getMaxDate = () => {
   let fullDate = new Date();
 
   // adjust for daylight savings time
-  fullDate.setTime( fullDate.getTime() - new Date().getTimezoneOffset()*60*1000 );
+  fullDate.setTime(
+    fullDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000
+  );
   fullDate = fullDate.toISOString();
 
-
   // max date one year ahead
-  const yearFromNow = parseInt(fullDate.substring(0,4))+1;
-  fullDate = (`${yearFromNow}${fullDate.substring(4)}`);
+  const yearFromNow = parseInt(fullDate.substring(0, 4)) + 1;
+  fullDate = `${yearFromNow}${fullDate.substring(4)}`;
 
   const formattedDate = truncateISO(fullDate);
 

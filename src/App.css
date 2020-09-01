@@ -1,9 +1,23 @@
 .App {
     margin: 20px 60px 20px 60px;
-    border: 1px solid grey;
+    border: 1px dashed rgb(237, 242, 244);
+    /* background-color: rgb(237, 242, 244); */
+    border-radius: 2%;
+    color: rgb(43, 45, 66);
 }
 
 .Header {
     margin: 0px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    padding: 20px 10px;
+    color: rgb(239, 35, 60);
+}
+
+.AppBody {
+    background-color: rgb(255,255,255);
+    border: 2px double rgb(141, 153, 174);
+}
+
+.Divider {
+    border: 1px solid rgb(237, 242, 244);
 }
