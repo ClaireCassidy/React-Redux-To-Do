@@ -1,7 +1,7 @@
 import React from "react";
 import "./ListItem.css";
 import { useDispatch } from "react-redux";
-import { toggleImportant, deleteItem } from "./Actions";
+import { toggleImportant, deleteItem, toggleComplete } from "./Actions";
 
 // action : mark completed
 
@@ -25,22 +25,33 @@ export default function ListItem({ todoItem }) {
       dispatch(deleteItem(id));
   }
 
+  const handleToggleComplete = (e) => {
+    dispatch(toggleComplete(id));
+  }
+
+  const handleEditExpiry = (e) => {
+    console.log("triggered");
+  }
+
   return (
-    <div className="ListItemContainer">
+    <div className={"ListItemContainer"+(completed ? " Completed" : "")}>
       <div className="DateContainer">
         <p className="DateAdded">{formatDate(dateAdded)}</p>
       </div>
 
       <div className="TodoTextContainer">
-        <p className="TodoText">{`id: ${id}\n${text}`}</p>
+        <p className="TodoText">{`id: ${id}\ncompleted: ${completed}\n${text}`}</p>
       </div>
 
       <div className="BottomBar">
         {/* Show the expiry date here if it has one */}
         <div className="ExpiresContainer">
-          {expires && (
+          {/* {expires && (
             <p className="ExpiresText">{"Expires " + formatDate(expires)}</p>
           )}
+          {!expires} */}
+          <p className="ExpiresText">{expires ? "Expires " + formatDate(expires) : "(No expiry set)"}</p>
+          <span className="EditExpiryText" onClick={handleEditExpiry}>(edit)</span>
         </div>
 
         <div className="ButtonBar">
@@ -51,7 +62,7 @@ export default function ListItem({ todoItem }) {
 
           <div className="DeleteIcon" onClick={handleDelete}>✖</div>
 
-          <div className="CompletedIcon">
+          <div className="CompletedIcon" onClick={handleToggleComplete}>
             {!completed && "☐"}
             {completed && "☑"}
           </div>

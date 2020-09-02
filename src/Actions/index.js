@@ -7,16 +7,23 @@ export const submitNewTodo = (newTodo) => {
     }
 }
 
-export const toggleImportant = (index) => {
+export const toggleImportant = (id) => {
     return {
         type: actionTypes.TOGGLE_IMPORTANT,
-        payload: index
+        payload: id
     }
 }
 
-export const deleteItem = (index) => {
+export const deleteItem = (id) => {
     return {
         type: actionTypes.DELETE_ITEM,
-        payload: index
+        payload: id
+    }
+}
+
+export const toggleComplete = (id) => {
+    return {
+        type: actionTypes.TOGGLE_COMPLETE,
+        payload: id
     }
 }
