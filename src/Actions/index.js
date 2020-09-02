@@ -41,3 +41,10 @@ export const updateExpiry = (payload) => {
         payload: payload
     }
 }
+
+export const submitTextEdit = (payload) => {
+    return {
+        type: actionTypes.SUBMIT_TEXT_EDIT,
+        payload: payload
+    }
+}

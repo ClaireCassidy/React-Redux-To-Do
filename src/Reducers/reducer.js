@@ -122,6 +122,20 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         todos: todosCopy
       });
     }
+    case (actionTypes.SUBMIT_TEXT_EDIT): {
+      const {id, newTodoText} = action.payload;
+      const todosCopy = [...state.todos];
+      const index = getTodoIndexById(id);
+
+      const itemCopy = Object.assign({}, todosCopy[id]);
+      itemCopy.text = newTodoText;
+
+      todosCopy.splice(index, 1, itemCopy);
+
+      return Object.assign({}, state, {
+        todos: todosCopy
+      });
+    }
     default:
       return state;
   }

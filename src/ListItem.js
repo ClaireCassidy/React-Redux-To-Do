@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import "./ListItem.css";
 import { useDispatch } from "react-redux";
-import { toggleImportant, deleteItem, toggleComplete, removeExpiry, updateExpiry } from "./Actions";
+import {
+  toggleImportant,
+  deleteItem,
+  toggleComplete,
+  removeExpiry,
+  updateExpiry,
+  sumbitTextEdit,
+  submitNewTodo,
+  submitTextEdit
+} from "./Actions";
 import { getCurDate, getMaxDate } from "./utility.js";
 
 // action : mark completed
@@ -12,6 +21,8 @@ export default function ListItem({ todoItem }) {
   const dispatch = useDispatch();
   const [expiryPickerActive, setExpiryPickerActive] = useState(false);
   const [selectedExpiryDate, setSelectedExpiryDate] = useState(null);
+  const [editTodoTextActive, setEditTodoTextActive] = useState(false);
+  const [newTodoText, setNewTodoText] = useState(text);
 
   const handleToggleImportant = (e) => {
     dispatch(toggleImportant(id));
@@ -33,51 +44,105 @@ export default function ListItem({ todoItem }) {
   const handleDatePickerChange = (e) => {
     console.log(e.target.value);
     setSelectedExpiryDate(e.target.value);
-  }
+  };
 
-  const handleRemoveCancel = (e) => {
-    if (expires) {
-      console.log("Expiry Removal Triggered");
-
-      dispatch(removeExpiry(id));
-    } else {
-      console.log("Cancel Expiry Edit Triggered");
-
-
-    }
+  const handleExpiryRemove = (e) => {
+    console.log("Expiry Removal Triggered");
+    dispatch(removeExpiry(id));
 
     setSelectedExpiryDate(null);
     setExpiryPickerActive(false);
-  }
+  };
+
+  const handleCancelExpiryEdit = (e) => {
+    console.log("Cancel Expiry Edit Triggered");
+    setSelectedExpiryDate(null);
+    setExpiryPickerActive(false);
+  };
 
   const handleExpirySubmission = (e) => {
     console.log("submitted");
     console.log(`${selectedExpiryDate}`);
 
-    dispatch(updateExpiry({id, selectedExpiryDate}))
+    dispatch(updateExpiry({ id, selectedExpiryDate }));
     setSelectedExpiryDate(null);
     setExpiryPickerActive(false);
+  };
+
+  const handleTextEditSubmission = (e) => {
+    if (newTodoText.length !== 0) {
+      console.log("submitting text edit");
+      dispatch(submitTextEdit({id, newTodoText}));
+      setNewTodoText("");
+    }
+
+    setEditTodoTextActive(false);
+  }
+
+  const handleTextEditCancel = (e) => {
+    console.log("Text Edit cancelled");
+
+    setNewTodoText("");
+    setEditTodoTextActive(false);
+  }
+
+  const handleEditTextAreaChange = (e) => {
+    //console.log("changed: "+e.target.value);
+    setNewTodoText(e.target.value);
   }
 
   return (
     <div className={"ListItemContainer" + (completed ? " Completed" : "")}>
+      {/* DATE */}
       <div className="DateContainer">
         <p className="DateAdded">{formatDate(dateAdded)}</p>
       </div>
 
+      {/* TODO BODY */}
       <div className="TodoTextContainer">
-        <p className="TodoText">{`id: ${id}\ncompleted: ${completed}\n${text}`}</p>
+        {!editTodoTextActive && (
+          <>
+            <p
+              className="TextEditButton"
+              onClick={() => {
+                setEditTodoTextActive(true);
+              }}
+            >
+              (edit)
+            </p>
+            <p className="TodoText">{`id: ${id}\ncompleted: ${completed}\n${text}`}</p>
+          </>
+        )}
+        {editTodoTextActive && (
+          // <p> active !</p>
+          <>
+            <textarea
+              className="EditTextTextarea"
+              name="EditTodoText"
+              rows="10"
+              placeholder={text}
+              value={newTodoText}
+              onChange={handleEditTextAreaChange}
+            />
+            <div className="EditTextButtonsContainer">
+              <button className="SubmitTextButton" onClick={handleTextEditSubmission}>Submit Changes</button>
+              <button className="RevertTextButton" onClick={() => setNewTodoText(text)}>Revert</button>
+              <button className="CancelTextButton" onClick={handleTextEditCancel}>Cancel</button>
+            </div>
+          </>
+        )}
       </div>
 
+      {/* BUTTONS */}
       <div className="BottomBar">
         {/* Show the expiry date here if it has one */}
         <div className="ExpiresContainer">
           <p className="ExpiresText">
             {expires ? "Expires " + formatDate(expires) : "(No expiry set)"}
           </p>
-          {!expiryPickerActive && <span className="EditExpiryText" onClick={handleEditExpiry}>
-            (edit)
-          </span>}
+          <div>
+            <p className="EditExpiryText">{!expiryPickerActive && "(edit)"}</p>
+          </div>
         </div>
 
         <div className="ButtonBar">
@@ -120,12 +185,24 @@ export default function ListItem({ todoItem }) {
                   onChange={handleDatePickerChange}
                 />
               </div>
+
               <div className="ExpiryRemoveCancel">
-                <p onClick={handleRemoveCancel}>
-                  {expires && "Remove Expiry"}
-                  {!expires && "Cancel"}
+                {expires && (
+                  <p
+                    className="RemoveExpiryButton"
+                    onClick={handleExpiryRemove}
+                  >
+                    Remove
+                  </p>
+                )}
+                <p
+                  className="CancelExpiryEditButton"
+                  onClick={handleCancelExpiryEdit}
+                >
+                  Cancel
                 </p>
               </div>
+
               <button className="ExpiryEditSubmit" type="submit">
                 Submit
               </button>

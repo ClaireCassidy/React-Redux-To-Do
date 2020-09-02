@@ -1,189 +1,270 @@
 .ListItemContainer {
-    border: 1px double rgb(141, 153, 174);
-    /* border-bottom: none; */
-    margin-bottom: 5px;
-    background-color: rgb(241, 247, 250);
+  border: 1px double rgb(141, 153, 174);
+  /* border-bottom: none; */
+  margin-bottom: 5px;
+  background-color: rgb(241, 247, 250);
 }
 
 .Completed {
-    opacity: 50%;
+  opacity: 50%;
 }
 
 .DateContainer {
-    /* border: 1px solid red; */
-    display: flex;
-    flex-direction: row;
-    /* width: fit-content; */
-    justify-content: flex-end;
-    padding: 5px 20px 5px 0px;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+  /* width: fit-content; */
+  justify-content: flex-end;
+  padding: 5px 20px 5px 0px;
 }
 
 .DateAdded {
-    /* border: 1px solid blue; */
-    margin: 0px;
-    font-size: 0.9em;
-    font-style: italic;
-    font-weight: 200;
-    letter-spacing: 1px;
-    color: rgb(141, 153, 174);
+  /* border: 1px solid blue; */
+  margin: 0px;
+  font-size: 0.9em;
+  font-style: italic;
+  font-weight: 200;
+  letter-spacing: 1px;
+  color: rgb(141, 153, 174);
 }
 
 .TodoTextContainer {
-    border: 1px dotted rgb(141, 153, 174);
-    margin: 10px 20px 10px 20px;
-    background-color: #fff;
-    border-radius: 4px;
+  position: relative;
+  border: 1px dotted rgb(141, 153, 174);
+  margin: 10px 20px 10px 20px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.TodoTextContainer:hover .TextEditButton {
+  display: inline;
 }
 
 .TodoText {
-    padding-left: 10px;
-    white-space: pre-line;
+  padding-left: 10px;
+  white-space: pre-line;
+}
+
+.TextEditButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  margin: 0px 5px 0px 0px;
+  font-style: italic;
+  font-size: 0.8em;
+  font-weight: 300;
+  color: rgb(141, 153, 174);
+}
+
+.TextEditButton:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.EditTextTextarea {
+  width: 95%;
+  height: 100%;
+  resize: none;
+  border: none;
+}
+
+.EditTextTextarea:focus {
+  outline: none;
+}
+
+.EditTextButtonsContainer {
+  /* border: 1px solid #000; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  color: red;
+  /* padding-bottom: 5px; */
+}
+
+.SubmitTextButton {
+  white-space: nowrap;
+  padding: 0px 40px 0px 40px;
+  /* margin-right: 10px; */
+  /* width: 15%; */
+}
+
+.CancelTextButton {
+  /* width: 15%; */
+  padding: 0% 10px 0% 10px;
+  /* margin-right: 10px; */
 }
 
 .BottomBar {
-    /* border: 1px solid orange; */
-    border-top: 1px dashed rgb(201, 201, 201);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
+  /* border: 1px solid orange; */
+  border-top: 1px dashed rgb(201, 201, 201);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
 }
 
 .ButtonBar {
-    /* border: 1px solid greenyellow; */
-    flex-basis: 30%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  /* border: 1px solid greenyellow; */
+  flex-basis: 30%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .ExpiresContainer {
-    flex-basis: 70%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    /* border: 1px solid #000; */
+  flex-basis: 70%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  /* border: 1px solid #000; */
 }
 
 .EditExpiryText {
-    display: none;
-    margin: 0px 0px 0px 5px;
-    font-size: 0.7em;
-    font-style: italic;
-    color: rgb(141, 153, 174);
-
+  /* display: none; */
+  visibility: hidden;
+  margin: 0px 0px 0px 5px;
+  font-size: 0.7em;
+  font-style: italic;
+  color: rgb(141, 153, 174);
 }
 
 .ExpiresContainer:hover .EditExpiryText {
-    display: inline;
+  /* display: inline; */
+  visibility: visible;
 }
 
 .ExpiresContainer:hover .EditExpiryText:hover {
-    text-decoration: underline;
-    cursor: pointer;
-    color: rgb(43, 45, 66);
+  text-decoration: underline;
+  cursor: pointer;
+  color: rgb(43, 45, 66);
 }
 
-
 .ExpiresText {
-    font-size: 0.9em;
-    /* border: 1px solid green; */
-    margin: 0px;
-    font-style: italic;
-    font-weight: 200;
-    letter-spacing: 1px;
-    color: rgb(141, 153, 174);
-    padding-left: 20px;
-
+  font-size: 0.9em;
+  /* border: 1px solid green; */
+  margin: 0px;
+  font-style: italic;
+  font-weight: 200;
+  letter-spacing: 1px;
+  color: rgb(141, 153, 174);
+  padding-left: 20px;
 }
 
 .ExpiryEditContainer {
-    padding-top: 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  padding-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .ExpiryEditText {
-    margin: 0px;
-    font-size: 0.8em;
+  margin: 0px;
+  font-size: 0.8em;
 }
 
 .ExpiryPickerEditContainer {
-    /* border: 1px solid #000; */
-    padding-left: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1
+  /* border: 1px solid #000; */
+  padding-left: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 
 .ExpiryPickerEdit {
-    /* border: 1px solid red; */
-    margin-left: 5px;
+  /* border: 1px solid red; */
+  margin-left: 5px;
 }
 
 .ExpiryRemoveCancel {
-    /* border: 1px solid #000; */
-    text-align: center;
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 25px;
-    /* justify-content: center; */
-    align-items: center;
-    margin: 0px;
-    font-size: 0.8em;
-    flex: 1;
+  /* border: 1px solid #000; */
+  text-align: center;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 25px;
+  /* justify-content: center; */
+  align-items: center;
+  margin: 0px;
+  font-size: 0.8em;
+  flex: 1;
 }
 
-.ExpiryRemoveCancel > p {
-    margin: 0px;
-    text-decoration: underline;
+.RemoveExpiryButton {
+  margin: 0px;
 }
 
-.ExpiryRemoveCancel:hover {
-    color:rgb(217, 4, 41);
-    cursor: pointer;
+.RemoveExpiryButton:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: rgb(217, 4, 41);
+}
+
+.CancelExpiryEditButton {
+  margin: 0px;
+  margin-left: 10px;
+}
+
+.CancelExpiryEditButton:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: rgb(217, 4, 41);
 }
 
 .ExpiryEditSubmit {
-    flex: 1;
+  flex: 1;
 }
 
 .ImportantIcon {
-    font-size: 1.6em;
-    color: rgb(255, 228, 94);
-    text-shadow: 0px 0px 2px rgb(240, 240, 240);
+  font-size: 1.6em;
+  color: rgb(255, 228, 94);
+  text-shadow: 0px 0px 2px rgb(240, 240, 240);
 }
 
 .ImportantIcon:hover {
-    color: rgb(255, 196, 0);
-    cursor: pointer;
+  color: rgb(255, 196, 0);
+  cursor: pointer;
 }
 
 .DeleteIcon {
-    color: rgb(217, 4, 41);
+  color: rgb(217, 4, 41);
 }
 
 .DeleteIcon:hover {
-    color: rgb(255, 0, 30);
-    cursor: pointer;
+  color: rgb(255, 0, 30);
+  cursor: pointer;
 }
 
 .CompletedIcon {
-    color: rgb(43, 45, 66);
+  color: rgb(43, 45, 66);
 }
 
 .CompletedIcon:hover {
-    color: grey;
-    /* font-weight: bold; */
-    cursor: pointer;
+  color: grey;
+  /* font-weight: bold; */
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 900px) {
-    .ExpiryRemoveCancel {
-        justify-content: center;
-        padding: 0px;
-    }
+  .ExpiryRemoveCancel {
+    justify-content: center;
+    padding: 0px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .ExpiresText {
+    font-size: 0.8em;
+  }
+
+  .SubmitTextButton {
+    white-space: nowrap;
+    padding: 0px 10px 0px 10px;
+    /* margin-right: 10px; */
+    /* width: 15%; */
+  }
 }
