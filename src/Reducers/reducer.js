@@ -1,6 +1,10 @@
 import { actionTypes } from "../action-types";
 import { INITIAL_STATE } from "../constants.js";
 
+
+//@TODO: Refactor reducer methods to use getIndexById
+// @TODO: Combine reducers?
+
 export const rootReducer = (state = INITIAL_STATE, action) => {
   //console.log("Initial state: " + JSON.stringify(INITIAL_STATE));
   //console.log("Action types: " + JSON.stringify(actionTypes));
@@ -81,7 +85,55 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         todos: todosCopy,
       });
     }
+    case (actionTypes.REMOVE_EXPIRY): {
+      const id = action.payload;
+      const todosCopy = [...state.todos];
+
+      const index = getTodoIndexById(todosCopy, id);
+      const itemCopy = Object.assign({}, todosCopy[index]);
+      console.log(JSON.stringify(itemCopy));
+
+      itemCopy.expires = null;
+      todosCopy.splice(index, 1, itemCopy);
+
+      return Object.assign({}, state, {
+        todos: todosCopy
+      });
+
+    }
+    case (actionTypes.UPDATE_EXPIRY): {
+
+      console.log(JSON.stringify(action));
+      const {id, selectedExpiryDate} = action.payload;
+
+      const todosCopy = [...state.todos];
+      // console.log(`id: ${id}, newExpiry: ${selectedExpiryDate}`);
+
+
+      const index = getTodoIndexById(todosCopy, id);
+      const itemCopy = Object.assign({}, todosCopy[index]);
+      // console.log(JSON.stringify(itemCopy));
+
+      itemCopy.expires = selectedExpiryDate;
+      // console.log(JSON.stringify(itemCopy));
+      todosCopy.splice(index, 1, itemCopy);
+
+      return Object.assign({}, state, {
+        todos: todosCopy
+      });
+    }
     default:
       return state;
   }
 };
+
+const getTodoIndexById = (list, id) => {
+
+  for (let i=0; i<list.length; i++) {
+    if (list[i].id === id) {
+      return i;
+    }
+  }
+
+  return -1;
+}

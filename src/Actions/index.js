@@ -27,3 +27,17 @@ export const toggleComplete = (id) => {
         payload: id
     }
 }
+
+export const removeExpiry = (id) => {
+    return {
+        type: actionTypes.REMOVE_EXPIRY,
+        payload: id
+    }
+}
+
+export const updateExpiry = (payload) => {
+    return {
+        type: actionTypes.UPDATE_EXPIRY,
+        payload: payload
+    }
+}

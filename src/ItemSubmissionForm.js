@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./ItemSubmissionForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import { submitNewTodo } from "./Actions";
+import { getCurDate, getMaxDate, truncateISO } from "./utility.js"
 
 export default function ItemSubmissionForm() {
   const [todoText, setTodoText] = useState("");
@@ -135,56 +136,56 @@ export default function ItemSubmissionForm() {
   );
 }
 
-const getCurDate = () => {
-  let fullDate = new Date();
+// const getCurDate = () => {
+//   let fullDate = new Date();
 
-  // adjust for daylight savings time
-  fullDate.setTime(
-    fullDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000
-  );
-  fullDate = fullDate.toISOString();
+//   // adjust for daylight savings time
+//   fullDate.setTime(
+//     fullDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000
+//   );
+//   fullDate = fullDate.toISOString();
 
-  const formattedDate = truncateISO(fullDate);
+//   const formattedDate = truncateISO(fullDate);
 
-  // if something hasn't gone wrong
-  if (formattedDate !== fullDate) {
-    return formattedDate;
-  }
+//   // if something hasn't gone wrong
+//   if (formattedDate !== fullDate) {
+//     return formattedDate;
+//   }
 
-  return "2020-01-01T00:00";
-};
+//   return "2020-01-01T00:00";
+// };
 
-const getMaxDate = () => {
-  let fullDate = new Date();
+// const getMaxDate = () => {
+//   let fullDate = new Date();
 
-  // adjust for daylight savings time
-  fullDate.setTime(
-    fullDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000
-  );
-  fullDate = fullDate.toISOString();
+//   // adjust for daylight savings time
+//   fullDate.setTime(
+//     fullDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000
+//   );
+//   fullDate = fullDate.toISOString();
 
-  // max date one year ahead
-  const yearFromNow = parseInt(fullDate.substring(0, 4)) + 1;
-  fullDate = `${yearFromNow}${fullDate.substring(4)}`;
+//   // max date one year ahead
+//   const yearFromNow = parseInt(fullDate.substring(0, 4)) + 1;
+//   fullDate = `${yearFromNow}${fullDate.substring(4)}`;
 
-  const formattedDate = truncateISO(fullDate);
+//   const formattedDate = truncateISO(fullDate);
 
-  // if something hasn't gone wrong
-  if (formattedDate !== fullDate) {
-    return formattedDate;
-  }
-  return null;
-};
+//   // if something hasn't gone wrong
+//   if (formattedDate !== fullDate) {
+//     return formattedDate;
+//   }
+//   return null;
+// };
 
 // truncates the seconds off the ISO string so it'll but formatted for the date picker
-const truncateISO = (isoString) => {
-  let fullDate = isoString;
+// const truncateISO = (isoString) => {
+//   let fullDate = isoString;
 
-  for (let i = fullDate.length - 1; i >= 0; i--) {
-    if (fullDate[i] === ":") {
-      return fullDate.substring(0, i);
-    }
-  }
+//   for (let i = fullDate.length - 1; i >= 0; i--) {
+//     if (fullDate[i] === ":") {
+//       return fullDate.substring(0, i);
+//     }
+//   }
 
-  return isoString;
-};
+//   return isoString;
+// };
