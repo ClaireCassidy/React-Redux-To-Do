@@ -6,3 +6,17 @@ export const submitNewTodo = (newTodo) => {
         payload: newTodo
     }
 }
+
+export const toggleImportant = (index) => {
+    return {
+        type: actionTypes.TOGGLE_IMPORTANT,
+        payload: index
+    }
+}
+
+export const deleteItem = (index) => {
+    return {
+        type: actionTypes.DELETE_ITEM,
+        payload: index
+    }
+}

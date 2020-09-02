@@ -12,15 +12,19 @@ export default function ItemSubmissionForm() {
   let todosList = useSelector((state) => {
     return state.todos;
   });
+  let todoId = useSelector((state) => {
+    return state.todoId;
+    console.log(state.todoId);
+  })
 
   const handleTextAreaChange = (event) => {
     setTodoText(event.target.value);
-    console.log(todosList);
+    //console.log(todosList);
     getCurDate();
   };
 
   const handleDatePickerChange = (event) => {
-    console.log(event.target.value);
+    //console.log(event.target.value);
     setExpiryDate(event.target.value);
   };
 
@@ -31,7 +35,8 @@ export default function ItemSubmissionForm() {
 
     const newTodo = {
       dateAdded: truncateISO(now),
-      listIndex: todosList.length,
+      id: todoId,
+      completed: false,
       text: todoText,
       important: important,
       expires: expires ? expiryDate : null,
@@ -60,7 +65,7 @@ export default function ItemSubmissionForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log("Submitted");
+          //console.log("Submitted");
           handleSubmission(e);
         }}
       >
@@ -76,7 +81,7 @@ export default function ItemSubmissionForm() {
 
             <div className="ExpiryDateContainer">
               <div className="ExpiryCheckboxContainer">
-                <label className="ExpiresLabel" for="checkboxExpires">
+                <label className="ExpiresLabel" htmlFor="checkboxExpires">
                   Expires?
                 </label>
                 <input
@@ -85,7 +90,7 @@ export default function ItemSubmissionForm() {
                   id="checkboxExpires"
                   name="checkboxExpires"
                   checked={expires}
-                  onClick={handleExpiresToggle}
+                  onChange={handleExpiresToggle}
                 />
               </div>
 

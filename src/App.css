@@ -4,13 +4,26 @@
     /* background-color: rgb(237, 242, 244); */
     border-radius: 2%;
     color: rgb(43, 45, 66);
+    font-family: 'Open Sans', sans-serif;
 }
 
 .Header {
     margin: 0px;
+    margin-top: 20px;
     /* border: 1px solid red; */
-    padding: 20px 10px;
+    /* padding: 20px 0px 0px 0px; */
+    padding: 0px 20px 0px 20px;
+    /* font-style: italic; */
     color: rgb(239, 35, 60);
+    font-size: 2.5em;
+    margin-bottom: 35px;
+    padding-bottom: 2px;
+    width: fit-content;
+    letter-spacing: 2px;
+    font-family: 'Roboto', sans-serif;
+    /* border-bottom: 2px double rgb(239, 35, 60); */
+    /* border-top: 2px double rgb(239, 35, 60); */
+
 }
 
 .AppBody {
@@ -20,4 +33,18 @@
 
 .Divider {
     border: 1px solid rgb(237, 242, 244);
+    padding: 0px;
+    margin: 0px 0px 10px 0px;
+}
+
+.Debug {
+    display: flex;
+}
+
+.Debug > p {
+    margin: 0px;
+}
+
+.Debug > button {
+    margin-left: 10px;
 }
