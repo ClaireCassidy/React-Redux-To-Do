@@ -1,0 +1,93 @@
+
+.PaginationContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 15px 5px 15px;
+    color: #2b2d42;
+}
+
+.ItemsPerPageContainer {
+    /* border: 1px solid #000; */
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.ItemsPerPageLabel {
+    margin: 0px 10px 0px 0px;
+    font-size: 0.8em;
+    white-space: nowrap;
+}
+
+.ItemsPerPageButton {
+    width: fit-content;
+    min-width: 30px;
+    background-color: rgb(237, 242, 244);
+    border: 1px solid rgb(141, 153, 174);    margin: 1px;
+    font-size: 0.8em;
+}
+
+.ItemsPerPageButton:hover {
+    background-color: rgb(242, 246, 248);
+    cursor: pointer;
+}
+
+.ItemsPerPageButton:focus {
+    outline: none;
+}
+
+.ItemsPerPageButton:active {
+    border: 1px solid black;
+    background-color: rgb(223, 227, 235);
+
+}
+
+/* .VerticalDivider {
+    border-right: 1px solid #8d99ae;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+} */
+
+.PageNumberContainer {
+    /* border: 1px solid #000; */
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.PageNumberButton {
+    font-size: 0.8em;
+    background-color: rgb(237, 242, 244);
+    border: 1px solid rgb(141, 153, 174);
+}
+
+.PageNumberButton:hover {
+    background-color: rgb(242, 246, 248);
+    cursor: pointer;
+}
+
+.PageNumberButton:focus {
+    outline: none;
+}
+
+.PageNumberButton:active {
+    border: 1px solid black;
+    background-color: rgb(223, 227, 235);
+}
+
+.PageNumberInput {
+    width: 30px;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+/* .PaginationContainer > button {
+    width: fit-content;
+    border: none;
+    background-color: white;
+} */

@@ -48,3 +48,17 @@ export const submitTextEdit = (payload) => {
         payload: payload
     }
 }
+
+export const updateItemsPerPage = (noItems) => {
+    return {
+        type: actionTypes.UPDATE_ITEMS_PER_PAGE,
+        payload: noItems
+    }
+}
+
+export const updatePageIndex = (index) => {
+    return {
+        type: actionTypes.SET_PAGE_INDEX,
+        payload: index
+    }
+}

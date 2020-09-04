@@ -73,7 +73,6 @@ export default function ListItem({ todoItem }) {
     if (newTodoText.length !== 0) {
       console.log("submitting text edit");
       dispatch(submitTextEdit({id, newTodoText}));
-      setNewTodoText("");
     }
 
     setEditTodoTextActive(false);
@@ -82,7 +81,7 @@ export default function ListItem({ todoItem }) {
   const handleTextEditCancel = (e) => {
     console.log("Text Edit cancelled");
 
-    setNewTodoText("");
+    setNewTodoText(text);
     setEditTodoTextActive(false);
   }
 
@@ -92,7 +91,7 @@ export default function ListItem({ todoItem }) {
   }
 
   return (
-    <div className={"ListItemContainer" + (completed ? " Completed" : "")}>
+    <div className={"ListItemContainer" + (completed ? " Completed" : "") + (important ? " Important" : "")}>
       {/* DATE */}
       <div className="DateContainer">
         <p className="DateAdded">{formatDate(dateAdded)}</p>
@@ -141,7 +140,7 @@ export default function ListItem({ todoItem }) {
             {expires ? "Expires " + formatDate(expires) : "(No expiry set)"}
           </p>
           <div>
-            <p className="EditExpiryText">{!expiryPickerActive && "(edit)"}</p>
+            <p className="EditExpiryText" onClick={handleEditExpiry}>{!expiryPickerActive && "(edit)"}</p>
           </div>
         </div>
 

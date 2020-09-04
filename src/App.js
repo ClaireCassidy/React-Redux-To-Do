@@ -4,9 +4,9 @@ import { submitNewTodo } from "./Actions";
 import { useDispatch, useSelector } from "react-redux";
 import ItemSubmissionForm from "./ItemSubmissionForm";
 import List from "./List";
+import Pagination from "./Pagination";
 
 function App() {
-
   // *- DEBUG: ------------------------*
   const [debug, setDebug] = useState(true);
   const todoId = useSelector((state) => {
@@ -14,7 +14,6 @@ function App() {
   });
   const dispatch = useDispatch();
 
-  
   const addDummyItem = () => {
     const dummyItem = {
       dateAdded: "2020-09-01T18:44",
@@ -42,16 +41,11 @@ function App() {
         <ItemSubmissionForm />
         <hr className="Divider" />
         <List />
+        <hr className="Divider" />
+        <Pagination />
       </div>
     </div>
   );
 }
-
-// dateAdded: "2020-09-01T18:44",
-// id: 0,
-// completed: false,
-// text: "hello",
-// important: false,
-// expires: "2020-09-01T18:44"
 
 export default App;

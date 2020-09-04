@@ -136,6 +136,18 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         todos: todosCopy
       });
     }
+    case (actionTypes.UPDATE_ITEMS_PER_PAGE): {
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        itemsPerPage: action.payload
+      })
+    }
+    case (actionTypes.SET_PAGE_INDEX): {
+      console.log("Setting page index "+action.payload+" ... ")
+      return Object.assign({}, state, {
+        pageIndex: action.payload
+      })
+    }
     default:
       return state;
   }

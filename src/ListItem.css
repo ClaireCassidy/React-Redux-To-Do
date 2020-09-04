@@ -2,7 +2,7 @@
   border: 1px double rgb(141, 153, 174);
   /* border-bottom: none; */
   margin-bottom: 5px;
-  background-color: rgb(241, 247, 250);
+  background-color: #f1f7fa;
 }
 
 .Completed {
@@ -268,3 +268,12 @@
     /* width: 15%; */
   }
 }
+
+.Important {
+  /* border: 1px solid rgb(255, 228, 94); */
+  border: 1px solid rgb(255, 196, 0);
+  background: linear-gradient(45deg, #ffe45e 1%,#faea92 10%,#f6f1c6 20%,#f1f7fa 50%,#f6f1c6 80%,#faea92 90%,#ffe45e 100%);
+}
+
+/* https://colorzilla.com/gradient-editor/#ffe45e+1,faea92+5,f6f1c6+20,f1f7fa+50,f6f1c6+81,faea92+95,ffe45e+100  */
+/* https://meyerweb.com/eric/tools/color-blend/#F1F7FA:FFE45E:2:hex */

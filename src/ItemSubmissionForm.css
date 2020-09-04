@@ -34,11 +34,16 @@
 }
 
 .TodoTextEntry {
-    resize: none;
+    /* display: block; */
+    resize: vertical;
+    min-height: 50px;
+    max-height: 300px;
+    /* margin-bottom: 50px; */
     width: 99%;
 }
 
 .ExpiryDateContainer {
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -109,6 +114,12 @@
     /* height: 50%; */
     width: 100%;
     margin-top: 10px;
+    background-color: rgb(237, 242, 244);
+    border: 1px solid rgb(141, 153, 174);
+}
+
+.FormSubmit:hover {
+    background-color: rgb(242, 246, 248);
 }
 
 @media only screen and (max-width: 900px) {
