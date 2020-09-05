@@ -9,7 +9,7 @@ const testItem = {
     expires: "2020-09-01T18:44"
 }
 const testItems = [];
-for (let i=0; i<25; i++) {
+for (let i=0; i<49; i++) {
     testItems[i] = Object.assign({}, testItem, {
         id: i
     });
@@ -27,6 +27,10 @@ for (let i=0; i<25; i++) {
 // *===================================
 
 export const ITEMS_PER_PAGE_INCREMENTS = [5, 10 , 20];
+export const PAGE_CHANGE_DIRECTIONS = {
+    NEXT: "NEXT",
+    PREV: "PREV"
+}
 
 // @TODO: set todoId back to !! 1 !! when test todos removed
 export const INITIAL_STATE = {

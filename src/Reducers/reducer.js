@@ -1,5 +1,5 @@
 import { actionTypes } from "../action-types";
-import { INITIAL_STATE } from "../constants.js";
+import { INITIAL_STATE, PAGE_CHANGE_DIRECTIONS } from "../constants.js";
 
 
 //@TODO: Refactor reducer methods to use getIndexById
@@ -139,14 +139,33 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
     case (actionTypes.UPDATE_ITEMS_PER_PAGE): {
       console.log(action.payload);
       return Object.assign({}, state, {
-        itemsPerPage: action.payload
+        itemsPerPage: action.payload,
+        pageIndex: 0
       })
     }
-    case (actionTypes.SET_PAGE_INDEX): {
-      console.log("Setting page index "+action.payload+" ... ")
+    case (actionTypes.UPDATE_PAGE_NUMBER): {
+      console.log("Updating Page Number: "+action.payload);
+
+      let updatedValue = 0;
+
+      switch (action.payload) {
+        case PAGE_CHANGE_DIRECTIONS.NEXT:
+          updatedValue = state.pageIndex + 1;
+          break;
+        case PAGE_CHANGE_DIRECTIONS.PREV:
+          updatedValue = state.pageIndex - 1;
+          break;
+        default:
+          updatedValue = validatePageNumber(action.payload, state.itemsPerPage, state.todos.length);
+          console.log(`Candidate Page Index : ${action.payload}\nAdjusted Page Index: ${updatedValue}`);
+          break;
+      }
+
+      console.log("Updating page index to be: "+updatedValue);
+
       return Object.assign({}, state, {
-        pageIndex: action.payload
-      })
+        pageIndex: updatedValue,
+      });
     }
     default:
       return state;
@@ -162,4 +181,17 @@ const getTodoIndexById = (list, id) => {
   }
 
   return -1;
+}
+
+// check the page number is within bounds and if not return the closest valid page number
+// passed a 0-indexed page number
+const validatePageNumber = (candidatePageNum, itemsPerPage, numTodos) => {
+  if (candidatePageNum < 0) {
+    return 0;
+  } else {
+    let maxPageIndex = Math.ceil(numTodos / itemsPerPage) - 1;
+    console.log(`Max page num : ${maxPageIndex}`);
+    if (candidatePageNum > maxPageIndex) return maxPageIndex;
+  }
+  return candidatePageNum;
 }

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 export default function List() {
 
+  // @TODO: remove *=================================
   const todoItems = useSelector((state) => {
     return state.todos;
   });
@@ -18,23 +19,25 @@ export default function List() {
   const pageIndex = useSelector((state) => {
     return state.pageIndex;
   })
+  // *===============================================
 
-  const [visibleListItems, setVisibleListItems] = useState(getVisibleListItems(todoItems, itemsPerPage, pageIndex))
+  const visibleListItems = useSelector((state) => {
+    return getVisibleListItems(state.todos, state.itemsPerPage, state.pageIndex);
+  })
+
+  const [startIndex, endIndex, numItems] = useSelector((state) => {
+    let startIndex = (state.pageIndex * state.itemsPerPage + 1);
+    let endIndex = startIndex + state.itemsPerPage - 1;
+    let numItems = state.todos.length;
+
+    return [startIndex, endIndex, numItems];
+  })
 
   return (
     <>
       {/* LIST */}
+      <h3 className="Showing">{`Showing (${startIndex}-${endIndex}) of ${numItems} items`}</h3>
       <div className="ListContainer">
-        {/* {todoItems.map((item) => {
-                return (<p key={Date.now()+Math.random()} className="TodoItem">{JSON.stringify(item)}</p>);
-            })} */}
-            <p>{`Items per page: ${itemsPerPage}`}</p>
-            <p>{`Page Index: ${pageIndex}`}</p>
-            <p>{`Visible List Items: ${JSON.stringify(visibleListItems)}`}</p>
-        {/* {todoItems.map((item) => {
-          //console.log(JSON.stringify(item));
-          return <ListItem todoItem={item} key={item.dateAdded + item.id} />;
-        })} */}
         {visibleListItems.map((item) => {
           return <ListItem todoItem={item} key={item.dateAdded + item.id} />
         })}

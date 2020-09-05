@@ -64,8 +64,15 @@
     font-size: 0.8em;
     background-color: rgb(237, 242, 244);
     border: 1px solid rgb(141, 153, 174);
+
+
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 .PageNumberButton:hover {
     background-color: rgb(242, 246, 248);
     cursor: pointer;

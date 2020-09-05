@@ -4,3 +4,16 @@
     padding-left: 10px;
     padding-bottom: 5px;
 }
+
+.Showing {
+    margin: 0px 0px 10px 10px;
+    /* border: 1px solid blue; */
+    color: rgb(217, 4, 41);
+    /* text-decoration: underline rgb(217, 4, 41) dashed; */
+    border-bottom: 1px dashed rgba(217, 4, 41, 0.5);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.9em;
+    width: fit-content;
+    font-style: italic;
+}

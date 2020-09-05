@@ -56,9 +56,9 @@ export const updateItemsPerPage = (noItems) => {
     }
 }
 
-export const updatePageIndex = (index) => {
+export const changePageNumber = (payload) => {
     return {
-        type: actionTypes.SET_PAGE_INDEX,
-        payload: index
+        type: actionTypes.UPDATE_PAGE_NUMBER,
+        payload: payload
     }
 }
