@@ -9,12 +9,12 @@ const testItem = {
     expires: "2020-09-01T18:44"
 }
 const testItems = [];
-for (let i=0; i<49; i++) {
-    testItems[i] = Object.assign({}, testItem, {
-        id: i
-    });
+// for (let i=0; i<25; i++) {
+//     testItems[i] = Object.assign({}, testItem, {
+//         id: i
+//     });
 
-}
+// }
 //console.log(testItems);
 //      {
 //     dateAdded: Date.now(),
@@ -35,7 +35,7 @@ export const PAGE_CHANGE_DIRECTIONS = {
 // @TODO: set todoId back to !! 1 !! when test todos removed
 export const INITIAL_STATE = {
     // unique key for each todo item, incr each time a new item added
-    todoId: 25,
+    todoId: 1,
     itemsPerPage: ITEMS_PER_PAGE_INCREMENTS[0],
     pageIndex: 0,
     // todos: [{

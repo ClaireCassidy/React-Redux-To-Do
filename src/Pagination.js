@@ -38,9 +38,9 @@ export default function Pagination() {
   };
 
   const [prevDisabled, nextDisabled] = useSelector((state) => {
-    console.log(`Cur page index: ${state.pageIndex}`);
-    console.log(`Todos per page: ${state.itemsPerPage}`);
-    console.log(`No. todos: ${state.todos.length}`);
+    // console.log(`Cur page index: ${state.pageIndex}`);
+    // console.log(`Todos per page: ${state.itemsPerPage}`);
+    // console.log(`No. todos: ${state.todos.length}`);
     let isPrevDisabled = state.pageIndex === 0;
     // console.log(
     //   state.todos.length - (state.pageIndex + 1) * state.itemsPerPage

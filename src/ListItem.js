@@ -37,17 +37,17 @@ export default function ListItem({ todoItem }) {
   };
 
   const handleEditExpiry = (e) => {
-    console.log("Activated Expiry Edit");
+    //console.log("Activated Expiry Edit");
     setExpiryPickerActive(true);
   };
 
   const handleDatePickerChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setSelectedExpiryDate(e.target.value);
   };
 
   const handleExpiryRemove = (e) => {
-    console.log("Expiry Removal Triggered");
+    //console.log("Expiry Removal Triggered");
     dispatch(removeExpiry(id));
 
     setSelectedExpiryDate(null);
@@ -55,14 +55,14 @@ export default function ListItem({ todoItem }) {
   };
 
   const handleCancelExpiryEdit = (e) => {
-    console.log("Cancel Expiry Edit Triggered");
+    //console.log("Cancel Expiry Edit Triggered");
     setSelectedExpiryDate(null);
     setExpiryPickerActive(false);
   };
 
   const handleExpirySubmission = (e) => {
-    console.log("submitted");
-    console.log(`${selectedExpiryDate}`);
+    // console.log("submitted");
+    // console.log(`${selectedExpiryDate}`);
 
     dispatch(updateExpiry({ id, selectedExpiryDate }));
     setSelectedExpiryDate(null);

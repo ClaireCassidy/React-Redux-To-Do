@@ -15,7 +15,7 @@ export default function ItemSubmissionForm() {
   });
   let todoId = useSelector((state) => {
     return state.todoId;
-    console.log(state.todoId);
+    //console.log(state.todoId);
   })
 
   const handleTextAreaChange = (event) => {

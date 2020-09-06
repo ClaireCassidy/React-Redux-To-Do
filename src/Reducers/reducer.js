@@ -11,6 +11,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case actionTypes.ADD_ITEM: {
+      console.log(`Adding this item: ${JSON.stringify(action.payload)}`);
       return Object.assign({}, state, {
         todoId: state.todoId + 1,
         todos: [...state.todos, action.payload],
@@ -40,7 +41,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       });
     }
     case actionTypes.DELETE_ITEM: {
-      console.log(`Deleting item w id ${action.payload}`);
+      //console.log(`Deleting item w id ${action.payload}`);
       let todosCopy = [...state.todos];
       let id = action.payload;
 
@@ -52,8 +53,8 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         }
       }
 
-      console.log(JSON.stringify(todosCopy));
-      console.log(`Found todo item w id ${id} @ index ${index}`);
+      //console.log(JSON.stringify(todosCopy));
+      //console.log(`Found todo item w id ${id} @ index ${index}`);
       todosCopy.splice(index, 1);
 
       return Object.assign({}, state, {
@@ -64,7 +65,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       const id = action.payload;
       let todosCopy = [...state.todos];
 
-      console.log("Toggling completed status of item w id "+id);
+      // console.log("Toggling completed status of item w id "+id);
 
       let index = -1;
       for (let i = 0; i<todosCopy.length; i++) {
@@ -74,7 +75,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         }
       }
 
-      console.log("Found target @ index "+index);
+      // console.log("Found target @ index "+index);
 
       let targetTodo = Object.assign({}, todosCopy[index]);
       targetTodo.completed = !targetTodo.completed;
@@ -91,7 +92,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
 
       const index = getTodoIndexById(todosCopy, id);
       const itemCopy = Object.assign({}, todosCopy[index]);
-      console.log(JSON.stringify(itemCopy));
+      // console.log(JSON.stringify(itemCopy));
 
       itemCopy.expires = null;
       todosCopy.splice(index, 1, itemCopy);
@@ -103,7 +104,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
     }
     case (actionTypes.UPDATE_EXPIRY): {
 
-      console.log(JSON.stringify(action));
+      // console.log(JSON.stringify(action));
       const {id, selectedExpiryDate} = action.payload;
 
       const todosCopy = [...state.todos];
@@ -124,10 +125,14 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
     }
     case (actionTypes.SUBMIT_TEXT_EDIT): {
       const {id, newTodoText} = action.payload;
-      const todosCopy = [...state.todos];
-      const index = getTodoIndexById(id);
+      console.log("Looking for item with id "+id);
 
-      const itemCopy = Object.assign({}, todosCopy[id]);
+      const todosCopy = [...state.todos];
+      const index = getTodoIndexById(todosCopy, id);
+      console.log(`Item w id ${id} @ index ${index}`);
+
+      const itemCopy = Object.assign({}, todosCopy[index]);
+      console.log("The item:"+JSON.stringify(itemCopy));
       itemCopy.text = newTodoText;
 
       todosCopy.splice(index, 1, itemCopy);
@@ -137,14 +142,14 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       });
     }
     case (actionTypes.UPDATE_ITEMS_PER_PAGE): {
-      console.log(action.payload);
+      // console.log(action.payload);
       return Object.assign({}, state, {
         itemsPerPage: action.payload,
         pageIndex: 0
       })
     }
     case (actionTypes.UPDATE_PAGE_NUMBER): {
-      console.log("Updating Page Number: "+action.payload);
+      // console.log("Updating Page Number: "+action.payload);
 
       let updatedValue = 0;
 
@@ -157,11 +162,11 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
           break;
         default:
           updatedValue = validatePageNumber(action.payload, state.itemsPerPage, state.todos.length);
-          console.log(`Candidate Page Index : ${action.payload}\nAdjusted Page Index: ${updatedValue}`);
+          // console.log(`Candidate Page Index : ${action.payload}\nAdjusted Page Index: ${updatedValue}`);
           break;
       }
 
-      console.log("Updating page index to be: "+updatedValue);
+      // console.log("Updating page index to be: "+updatedValue);
 
       return Object.assign({}, state, {
         pageIndex: updatedValue,
