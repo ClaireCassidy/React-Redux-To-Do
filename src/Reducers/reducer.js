@@ -172,6 +172,29 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         pageIndex: updatedValue,
       });
     }
+    case (actionTypes.DELETE_ALL_EXPIRED): {
+      const todosCopy = [...state.todos];
+      
+      const curTimeUnix = Date.now();
+      console.log(`Cur Time Unix: ${curTimeUnix}`);
+
+      const nonExpiredItems = todosCopy.filter((item, index) => {
+        const itemsExpiry = item.expires;
+        if (itemsExpiry) {
+          console.log(`Item @ index ${index} expires: ${itemsExpiry}`);
+          const itemsExpiryUnix = Date.parse(itemsExpiry);
+          if (curTimeUnix - itemsExpiryUnix <= 0) return true;
+        } else {
+          return true;
+        }
+        return false;
+      });
+
+      console.log("Non-Expired Items: "+JSON.stringify(nonExpiredItems));
+      return Object.assign({}, state, {
+        todos: nonExpiredItems
+      })
+    }
     default:
       return state;
   }

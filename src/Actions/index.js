@@ -62,3 +62,9 @@ export const changePageNumber = (payload) => {
         payload: payload
     }
 }
+
+export const deleteExpiredTodos = () => {
+    return {
+        type: actionTypes.DELETE_ALL_EXPIRED
+    }
+}

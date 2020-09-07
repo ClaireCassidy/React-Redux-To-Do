@@ -24,7 +24,56 @@ const testItems =
     text: "hello",
     important: false,
     expires: "2020-09-11T18:44"
-}];
+},
+{
+    dateAdded: "2020-09-01T18:44",
+    id: 2,
+    completed: false,
+    text: "hello",
+    important: true,
+    expires: "2020-09-07T18:44"
+},
+{
+    dateAdded: "2020-09-04T18:44",
+    id: 3,
+    completed: false,
+    text: "hello",
+    important: true,
+    expires: "2020-09-14T18:44"
+},
+{
+    dateAdded: "2020-09-05T18:44",
+    id: 4,
+    completed: false,
+    text: "hello",
+    important: false,
+    expires: "2020-09-07T18:43"
+},
+{
+    dateAdded: "2020-09-09T18:44",
+    id: 5,
+    completed: false,
+    text: "hello",
+    important: true,
+    expires: null
+},
+{
+    dateAdded: "2020-09-09T18:45",
+    id: 6,
+    completed: false,
+    text: "hello",
+    important: false,
+    expires: null
+},
+{
+    dateAdded: "2020-09-09T18:45",
+    id: 7,
+    completed: false,
+    text: "hello",
+    important: false,
+    expires: "2020-09-04T18:43"
+}
+];
 // for (let i=0; i<25; i++) {
 //     testItems[i] = Object.assign({}, testItem, {
 //         id: i
@@ -57,7 +106,7 @@ export const SORT_CRITERIA = {
 // @TODO: set todoId back to !! 1 !! when test todos removed
 export const INITIAL_STATE = {
     // unique key for each todo item, incr each time a new item added
-    todoId: 2,
+    todoId: testItems.length,
     itemsPerPage: ITEMS_PER_PAGE_INCREMENTS[0],
     pageIndex: 0,
     // todos: [{

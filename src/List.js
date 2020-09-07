@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./List.css";
 import ListItem from "./ListItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SORT_CRITERIA } from "./constants";
+import { deleteExpiredTodos } from './Actions';
 
 // action : change page (pagination)
 
@@ -22,6 +23,8 @@ export default function List() {
   // *===============================================
 
   const [sortCriterion, setSortCriterion] = useState(SORT_CRITERIA.NEW);
+
+  const dispatch = useDispatch();
 
   const visibleListItems = useSelector((state) => {
     return getVisibleListItems(
@@ -45,6 +48,10 @@ export default function List() {
     setSortCriterion(e.target.value);
   };
 
+  const handleDeleteExpired = (e) => {
+    console.log("Deleting expired todos");
+    dispatch(deleteExpiredTodos());
+  }
   return (
     <>
       {/* LIST */}
@@ -82,7 +89,7 @@ export default function List() {
           </div>
 
           <div className="DeleteExpiredContainer OptionsItem">
-            <button>Delete Expired To-dos</button>
+            <button onClick={handleDeleteExpired}>Delete Expired To-dos</button>
           </div>
 
           <div className="ShowCompletedContainer OptionsItem">
@@ -121,6 +128,8 @@ const getVisibleListItems = (list, itemsPerPage, pageIndex, sortCriterion) => {
 };
 
 const applySortCriterion = (list, sortCriterion) => {
+  // list items stored in order of addition
+  //  means implicitly the list is sorted oldest - newest
   switch (sortCriterion) {
     case SORT_CRITERIA.NEW:
       return list.reverse();
