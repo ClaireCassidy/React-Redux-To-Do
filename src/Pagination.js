@@ -24,7 +24,7 @@ export default function Pagination() {
     // keyCode == null => triggered by lose focus
     if (keyCode === 13 || keyCode == null) {
       if (e.target.value !== "") {
-        dispatch(changePageNumber(parseInt(e.target.value) -1));
+        dispatch(changePageNumber(parseInt(e.target.value) - 1));
       } else {
         e.target.placeholder = parseInt(pageNumber) + 1;
       }
@@ -52,66 +52,70 @@ export default function Pagination() {
 
   return (
     <>
-      <div className="PaginationContainer">
-        <div className="ItemsPerPageContainer">
-          <p className="ItemsPerPageLabel">Items Per Page:</p>
-          <button
-            className="ItemsPerPageButton"
-            onClick={() => {
-              handleItemsPerPageChange(ITEMS_PER_PAGE_INCREMENTS[0]);
-            }}
-          >
-            {ITEMS_PER_PAGE_INCREMENTS[0]}
-          </button>
-          <button
-            className="ItemsPerPageButton"
-            onClick={() =>
-              handleItemsPerPageChange(ITEMS_PER_PAGE_INCREMENTS[1])
-            }
-          >
-            {ITEMS_PER_PAGE_INCREMENTS[1]}
-          </button>
-          <button
-            className="ItemsPerPageButton"
-            onClick={() =>
-              handleItemsPerPageChange(ITEMS_PER_PAGE_INCREMENTS[2])
-            }
-          >
-            {ITEMS_PER_PAGE_INCREMENTS[2]}
-          </button>
-        </div>
-        {/* <div className="VerticalDivider">❘</div> */}
-        <div className="PageNumberContainer">
-          <button
-            className="PageNumberButton PagePrev"
-            onClick={() => {
-              handlePageArrowClick(PAGE_CHANGE_DIRECTIONS.PREV);
-            }}
-            disabled={prevDisabled}
-          >
-            ⇐
-          </button>
-          <input
-            className="PageNumberInput"
-            name="PageNumberInput"
-            pattern="[0-9]"
-            type="number"
-            placeholder={parseInt(pageNumber) + 1}
-            onFocus={(e) => {e.target.placeholder = ""}}
-            onKeyPress={handlePageNumberInput}
-            // value={pageNumber + 1}
-            // onChange={handlePageNumberInput}
-            onBlur={handlePageNumberInput}
-          />
-          <button
-            className="PageNumberButton PageNext"
-            onClick={() => {
-              handlePageArrowClick(PAGE_CHANGE_DIRECTIONS.NEXT);
-            }}
-            disabled={nextDisabled}
-          >
-            ⇒
-          </button>
+      <div className="PaginationContainerOuter">
+        <div className="PaginationContainerInner">
+          <div className="ItemsPerPageContainer">
+            <p className="ItemsPerPageLabel">Items Per Page:</p>
+            <button
+              className="ItemsPerPageButton"
+              onClick={() => {
+                handleItemsPerPageChange(ITEMS_PER_PAGE_INCREMENTS[0]);
+              }}
+            >
+              {ITEMS_PER_PAGE_INCREMENTS[0]}
+            </button>
+            <button
+              className="ItemsPerPageButton"
+              onClick={() =>
+                handleItemsPerPageChange(ITEMS_PER_PAGE_INCREMENTS[1])
+              }
+            >
+              {ITEMS_PER_PAGE_INCREMENTS[1]}
+            </button>
+            <button
+              className="ItemsPerPageButton"
+              onClick={() =>
+                handleItemsPerPageChange(ITEMS_PER_PAGE_INCREMENTS[2])
+              }
+            >
+              {ITEMS_PER_PAGE_INCREMENTS[2]}
+            </button>
+          </div>
+          {/* <div className="VerticalDivider">❘</div> */}
+          <div className="PageNumberContainer">
+            <button
+              className="PageNumberButton PagePrev"
+              onClick={() => {
+                handlePageArrowClick(PAGE_CHANGE_DIRECTIONS.PREV);
+              }}
+              disabled={prevDisabled}
+            >
+              ⇐
+            </button>
+            <input
+              className="PageNumberInput"
+              name="PageNumberInput"
+              pattern="[0-9]"
+              type="number"
+              placeholder={parseInt(pageNumber) + 1}
+              onFocus={(e) => {
+                e.target.placeholder = "";
+              }}
+              onKeyPress={handlePageNumberInput}
+              // value={pageNumber + 1}
+              // onChange={handlePageNumberInput}
+              onBlur={handlePageNumberInput}
+            />
+            <button
+              className="PageNumberButton PageNext"
+              onClick={() => {
+                handlePageArrowClick(PAGE_CHANGE_DIRECTIONS.NEXT);
+              }}
+              disabled={nextDisabled}
+            >
+              ⇒
+            </button>
+          </div>
         </div>
       </div>
     </>

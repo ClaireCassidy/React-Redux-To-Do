@@ -26,6 +26,20 @@ function App() {
 
     dispatch(submitNewTodo(dummyItem));
   };
+
+  const addImportantItem = () => {
+    const dummyItem = {
+      dateAdded: "2020-09-01T18:44",
+      id: todoId,
+      completed: false,
+      text: "Dummy",
+      important: true,
+      expires: null,
+    };
+
+    dispatch(submitNewTodo(dummyItem));
+
+  }
   // *----------------------------------*
 
   return (
@@ -34,7 +48,13 @@ function App() {
       {debug && (
         <div className="Debug">
           <p>DEBUG:</p>
-          <button onClick={addDummyItem}>Add Dummy Item</button>
+          <button
+            onClick={addDummyItem}
+          >
+            Add Dummy Item
+          </button>
+          {/* <button onClick={()=>{addDummyItem(20)}}>Add 20x Dummy Item</button> */}
+          <button onClick={addImportantItem}>Add Important Item</button>
         </div>
       )}
       <div className="AppBody">

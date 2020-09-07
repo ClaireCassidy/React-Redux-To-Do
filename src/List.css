@@ -46,7 +46,26 @@
     margin: 5px 0px 0px 5px;
 }
 
-::placeholder {
-    color: black;
-    opacity: 1;
+.SortBySection {
+    display: flex;
+    flex-direction: row;    
+}
+
+.DeleteExpiredContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.ShowCompletedContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.DeleteCompletedContainer {
+    display: flex;
+    flex-direction: column
+}
+
+.OptionsItem {
+    margin: 5px;
 }
