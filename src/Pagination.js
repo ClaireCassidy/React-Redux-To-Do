@@ -45,13 +45,23 @@ export default function Pagination() {
     // console.log(
     //   state.todos.length - (state.pageIndex + 1) * state.itemsPerPage
     // );
+    let todosCopy = [...state.todos];
+    let numTodos = state.todos.length;
+
+    if (!state.showCompleted) {
+      let nonCompletedTodos = todosCopy.filter((item) => {return !item.completed});
+      numTodos = nonCompletedTodos.length;
+    }
     let isNextDisabled =
-      state.todos.length - (state.pageIndex + 1) * state.itemsPerPage <= 0;
+      numTodos - (state.pageIndex + 1) * state.itemsPerPage <= 0;
     return [isPrevDisabled, isNextDisabled];
   });
 
+  const showCompleted = useSelector((state) => {return state.showCompleted});
+
   return (
     <>
+    <p>Show Completed ? : {""+showCompleted}</p>
       <div className="PaginationContainerOuter">
         <div className="PaginationContainerInner">
           <div className="ItemsPerPageContainer">

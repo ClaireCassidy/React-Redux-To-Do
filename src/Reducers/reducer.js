@@ -161,7 +161,17 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
           updatedValue = state.pageIndex - 1;
           break;
         default:
-          updatedValue = validatePageNumber(action.payload, state.itemsPerPage, state.todos.length);
+          let numTodos;
+          if (!state.showCompleted) {
+            const todosCopy = [...state.todos];
+            const nonCompletedTodos = todosCopy.filter((item) => {return !item.completed});
+            numTodos = nonCompletedTodos.length;
+          } else {
+            numTodos = state.todos.length;
+          }
+          console.log("Num elligible todos: "+numTodos);
+
+          updatedValue = validatePageNumber(action.payload, state.itemsPerPage, numTodos);
           // console.log(`Candidate Page Index : ${action.payload}\nAdjusted Page Index: ${updatedValue}`);
           break;
       }
@@ -189,9 +199,15 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         }
         return false;
       });
+
+      // adjust page index if necessary
+      let newPageIndex = validatePageNumber(state.pageIndex, state.itemsPerPage, nonExpiredItems.length);
+      console.log(`Old page index ${state.pageIndex}, New page index: ${newPageIndex}`);
+
       console.log("Non-Expired Items: "+JSON.stringify(nonExpiredItems));
       return Object.assign({}, state, {
-        todos: nonExpiredItems
+        todos: nonExpiredItems,
+        pageIndex: newPageIndex
       })
     }
     case (actionTypes.DELETE_COMPLETED_TODOS): {
@@ -201,14 +217,40 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         return !item.completed;
       });
 
+      // adjust page index if necessary
+      let newPageIndex = validatePageNumber(state.pageIndex, state.itemsPerPage, nonCompletedItems.length);
+      console.log(`Old page index ${state.pageIndex}, New page index: ${newPageIndex}`);
+
       console.log(`Non-Completed Items: ${nonCompletedItems}`);
       return Object.assign({}, state, {
-        todos: nonCompletedItems
+        todos: nonCompletedItems,
+        pageIndex: newPageIndex
       });
     }
     case (actionTypes.SET_AUTO_DELETE_COMPLETED): {
       return (Object.assign({}, state, {
         autoDeleteCompleted: action.payload
+      }))
+    }
+    case (actionTypes.SET_SHOW_COMPLETED): {
+
+      //console.log("DOIN IT");
+      let newPageIndex = state.pageIndex;
+
+      // toggling visibility of todos may leave the user on an invalid page 
+      if (!action.payload) { // if were not showing completed todos ...
+        const todosCopy = [...state.todos];
+        const nonCompletedTodos = todosCopy.filter((item) => {return !item.completed});
+
+        // ... recalculate the max page number and adjust the current page number if necessary
+        const newPageNumber = validatePageNumber(state.pageIndex, state.itemsPerPage, nonCompletedTodos.length);
+        console.log(`Old page number: ${parseInt(state.pageIndex)+1}, New Page number: ${parseInt(newPageNumber)+1}`);
+        newPageIndex = newPageNumber;
+      }
+
+      return (Object.assign({}, state, {
+        showCompleted: action.payload,
+        pageIndex: newPageIndex
       }))
     }
     default:

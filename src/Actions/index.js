@@ -81,3 +81,10 @@ export const setAutoDeleteCompleted = (payload) => {
         payload: payload
     }
 }
+
+export const setShowCompleted = (payload) => {
+    return {
+        type: actionTypes.SET_SHOW_COMPLETED,
+        payload: payload
+    }
+}

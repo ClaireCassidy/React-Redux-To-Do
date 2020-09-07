@@ -3,7 +3,7 @@ import "./List.css";
 import ListItem from "./ListItem";
 import { useSelector, useDispatch } from "react-redux";
 import { SORT_CRITERIA } from "./constants";
-import { deleteExpiredTodos, deleteCompletedTodos, setAutoDeleteCompleted } from "./Actions";
+import { deleteExpiredTodos, deleteCompletedTodos, setAutoDeleteCompleted, setShowCompleted } from "./Actions";
 
 // action : change page (pagination)
 // @TODO: Change number pages to reflect the number of VISIBLE list items, not the length of the whole unfiltered list of todos
@@ -23,12 +23,13 @@ export default function List() {
   // *===============================================
 
   const [sortCriterion, setSortCriterion] = useState(SORT_CRITERIA.NEW);
-  const [showCompletedTodos, setShowCompletedTodos] = useState(true);
+  // const [showCompletedTodos, setShowCompletedTodos] = useState(true);
   // const [
   //   deleteCompletedAutomatically,
   //   setDeleteCompletedAutomatically,
   // ] = useState(false);
   const autoDeleteCompleted = useSelector((state) => {return state.autoDeleteCompleted});
+  const showCompletedTodos = useSelector((state) => {return state.showCompleted});
 
   const dispatch = useDispatch();
 
@@ -62,7 +63,9 @@ export default function List() {
 
   const handleToggleShowCompletedTodos = (e) => {
     console.log("Toggling show completed");
-    setShowCompletedTodos((showCompletedTodos) => !showCompletedTodos);
+    // setShowCompletedTodos((showCompletedTodos) => !showCompletedTodos);
+
+    dispatch(setShowCompleted(!showCompletedTodos));
   };
 
   const handleDeleteCompletedTodos = (e) => {
