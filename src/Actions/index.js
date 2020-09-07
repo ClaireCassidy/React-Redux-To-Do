@@ -68,3 +68,16 @@ export const deleteExpiredTodos = () => {
         type: actionTypes.DELETE_ALL_EXPIRED
     }
 }
+
+export const deleteCompletedTodos = () => {
+    return {
+        type: actionTypes.DELETE_COMPLETED_TODOS
+    }
+}
+
+export const setAutoDeleteCompleted = (payload) => {
+    return {
+        type: actionTypes.SET_AUTO_DELETE_COMPLETED,
+        payload: payload
+    }
+}

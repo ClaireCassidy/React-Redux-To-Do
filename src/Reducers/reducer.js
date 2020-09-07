@@ -189,11 +189,27 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         }
         return false;
       });
-
       console.log("Non-Expired Items: "+JSON.stringify(nonExpiredItems));
       return Object.assign({}, state, {
         todos: nonExpiredItems
       })
+    }
+    case (actionTypes.DELETE_COMPLETED_TODOS): {
+      let todosCopy = [...state.todos];
+
+      let nonCompletedItems = todosCopy.filter((item) => {
+        return !item.completed;
+      });
+
+      console.log(`Non-Completed Items: ${nonCompletedItems}`);
+      return Object.assign({}, state, {
+        todos: nonCompletedItems
+      });
+    }
+    case (actionTypes.SET_AUTO_DELETE_COMPLETED): {
+      return (Object.assign({}, state, {
+        autoDeleteCompleted: action.payload
+      }))
     }
     default:
       return state;

@@ -3,10 +3,10 @@ import "./List.css";
 import ListItem from "./ListItem";
 import { useSelector, useDispatch } from "react-redux";
 import { SORT_CRITERIA } from "./constants";
-import { deleteExpiredTodos } from './Actions';
+import { deleteExpiredTodos, deleteCompletedTodos, setAutoDeleteCompleted } from "./Actions";
 
 // action : change page (pagination)
-
+// @TODO: Change number pages to reflect the number of VISIBLE list items, not the length of the whole unfiltered list of todos
 export default function List() {
   // @TODO: remove *=================================
   const todoItems = useSelector((state) => {
@@ -23,6 +23,12 @@ export default function List() {
   // *===============================================
 
   const [sortCriterion, setSortCriterion] = useState(SORT_CRITERIA.NEW);
+  const [showCompletedTodos, setShowCompletedTodos] = useState(true);
+  // const [
+  //   deleteCompletedAutomatically,
+  //   setDeleteCompletedAutomatically,
+  // ] = useState(false);
+  const autoDeleteCompleted = useSelector((state) => {return state.autoDeleteCompleted});
 
   const dispatch = useDispatch();
 
@@ -31,7 +37,8 @@ export default function List() {
       state.todos,
       state.itemsPerPage,
       state.pageIndex,
-      sortCriterion
+      sortCriterion,
+      showCompletedTodos
     );
   });
 
@@ -51,7 +58,33 @@ export default function List() {
   const handleDeleteExpired = (e) => {
     console.log("Deleting expired todos");
     dispatch(deleteExpiredTodos());
-  }
+  };
+
+  const handleToggleShowCompletedTodos = (e) => {
+    console.log("Toggling show completed");
+    setShowCompletedTodos((showCompletedTodos) => !showCompletedTodos);
+  };
+
+  const handleDeleteCompletedTodos = (e) => {
+    console.log("Deleting Completed Todos");
+    dispatch(deleteCompletedTodos());
+  };
+
+  const toggleDeleteCompletedAutomatically = (e) => {
+    console.log("Toggling delete completed automatically");
+
+    // if we're setting it to true, we need to delete those todos currently marked active
+    if (!autoDeleteCompleted) {
+      dispatch(deleteCompletedTodos());
+    }
+
+    //
+    // setDeleteCompletedAutomatically(
+    //   (deleteCompletedAutomatically) => !deleteCompletedAutomatically
+    // );
+    dispatch(setAutoDeleteCompleted(!autoDeleteCompleted));
+  };
+
   return (
     <>
       {/* LIST */}
@@ -95,18 +128,33 @@ export default function List() {
           <div className="ShowCompletedContainer OptionsItem">
             <div>
               <label htmlFor="show-completed">Show Completed To-Dos?</label>
-              <input name="show-completed" type="checkbox" />
+              <input
+                name="show-completed"
+                type="checkbox"
+                checked={showCompletedTodos}
+                onChange={handleToggleShowCompletedTodos}
+              />
             </div>
           </div>
 
           <div className="DeleteCompletedContainer OptionsItem">
-            <button name="delete-completed">Delete Completed To-dos</button>
+            <button
+              name="delete-completed"
+              onClick={handleDeleteCompletedTodos}
+            >
+              Delete Completed To-dos
+            </button>
             <label htmlFor="delete-completed">(This cannot be undone)</label>
             <div>
               <label htmlFor="auto-delete-completed">
                 Do this automatically
               </label>
-              <input name="auto-delete-completed" type="checkbox" />
+              <input
+                name="auto-delete-completed"
+                type="checkbox"
+                checked={autoDeleteCompleted}
+                onChange={toggleDeleteCompletedAutomatically}
+              />
             </div>
           </div>
         </div>
@@ -115,10 +163,23 @@ export default function List() {
   );
 }
 
-const getVisibleListItems = (list, itemsPerPage, pageIndex, sortCriterion) => {
+const getVisibleListItems = (
+  list,
+  itemsPerPage,
+  pageIndex,
+  sortCriterion,
+  showCompleted
+) => {
   console.log(`Sort criterion: ${sortCriterion}`);
+  console.log(`Show completed? ${showCompleted}`);
 
-  const sortedList = applySortCriterion([...list], sortCriterion); // don't modify original
+  let sortedList = applySortCriterion([...list], sortCriterion); // don't modify original
+  // remove completed items if showCompleted not checked
+  if (!showCompleted) {
+    sortedList = sortedList.filter((item) => {
+      return !item.completed;
+    });
+  }
 
   const startIndex = itemsPerPage * pageIndex;
 
@@ -149,8 +210,7 @@ const applySortCriterion = (list, sortCriterion) => {
     case SORT_CRITERIA.EXPIRY:
       // console.log("Not yet sweaty!!");
 
-      list.sort( (a, b) => {
-
+      list.sort((a, b) => {
         let aExpiry = a.expires;
         let bExpiry = b.expires;
         console.log(`${aExpiry} | ${bExpiry}`);
@@ -159,16 +219,18 @@ const applySortCriterion = (list, sortCriterion) => {
         if (aExpiry == null && bExpiry == null) return 0; // ... order irrelevant
 
         // if one has an expiry ...
-        if (aExpiry == null || bExpiry == null) return (aExpiry ? -1 : 1); // ...that item comes first
+        if (aExpiry == null || bExpiry == null) return aExpiry ? -1 : 1; // ...that item comes first
 
         // otherwise both have an expiry
         let aExpiryUnixTime = Date.parse(aExpiry);
         let bExpiryUnixTime = Date.parse(bExpiry);
 
-        console.log(`A Expiry: ${aExpiry} (In unix time: ${aExpiryUnixTime}), B Expiry: ${bExpiry} (In unix time: ${bExpiryUnixTime})`);
+        console.log(
+          `A Expiry: ${aExpiry} (In unix time: ${aExpiryUnixTime}), B Expiry: ${bExpiry} (In unix time: ${bExpiryUnixTime})`
+        );
         console.log(`A before B ? ${aExpiryUnixTime - bExpiryUnixTime <= 0}`);
-        return (aExpiryUnixTime - bExpiryUnixTime);
-      })
+        return aExpiryUnixTime - bExpiryUnixTime;
+      });
       return list;
   }
 };

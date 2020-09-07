@@ -117,5 +117,6 @@ export const INITIAL_STATE = {
     //     important: false,
     //     expires: "2020-09-01T18:44"
     // }]
-    todos: testItems
+    todos: testItems,
+    autoDeleteCompleted: false
 }
