@@ -61,7 +61,7 @@ export default function Pagination() {
 
   return (
     <>
-    <p>Show Completed ? : {""+showCompleted}</p>
+    {/* <p>Show Completed ? : {""+showCompleted}</p> */}
       <div className="PaginationContainerOuter">
         <div className="PaginationContainerInner">
           <div className="ItemsPerPageContainer">

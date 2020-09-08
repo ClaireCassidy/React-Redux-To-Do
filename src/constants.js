@@ -121,3 +121,16 @@ export const INITIAL_STATE = {
     autoDeleteCompleted: false,
     showCompleted: true
 }
+
+
+
+const demoItems = [
+    {
+        dateAdded: "2020-07-10T18:44",
+        id: 0,
+        completed: false,
+        text: "This is an expired item",
+        important: false,
+        expires: "2020-07-12T13:44"
+    }
+]

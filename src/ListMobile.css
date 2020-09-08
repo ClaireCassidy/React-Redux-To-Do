@@ -1,0 +1,104 @@
+.OptionsToggle {
+  /* border: 2px double rgb(141, 153, 174); */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 0px 15px 0px 15px; */
+  /* margin: -5px 5px 5px 5px; */
+  margin: -10px 0px 0px 0px;
+  padding: 0px 20px 0px 20px;
+  border-top: 2px double rgb(223, 228, 230);
+  border-bottom: 2px double rgb(223, 228, 230);
+  background: #f2f6f8; /* Old browsers */
+  background: -moz-linear-gradient(
+    top,
+    hsl(200, 30%, 96%) 0%,
+    hsl(200, 30%, 96%) 49%,
+    hsl(192, 13%, 93%) 51%,
+    hsl(205, 51%, 94%) 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    hsl(200, 30%, 96%) 0%,
+    hsl(200, 30%, 96%) 49%,
+    hsl(192, 13%, 93%) 51%,
+    hsl(205, 51%, 94%) 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    hsl(200, 30%, 96%) 0%,
+    hsl(200, 30%, 96%) 49%,
+    hsl(192, 13%, 93%) 51%,
+    hsl(205, 51%, 94%) 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.OptionsToggle:hover {
+  cursor: pointer;
+}
+
+.OptionsToggleText {
+  color: rgb(217, 4, 41);
+  white-space: pre;
+  font-size: 0.9em;
+  text-shadow: 1px 1px 1px rgb(255, 255, 255);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  padding: 0px;
+  /* border: 1px solid #000; */
+  margin: 0px;
+}
+
+.OptionsToggleArrow {
+  color: #2b2d42;
+  color: rgb(239, 35, 60);
+  color: rgb(217, 4, 41);
+  text-shadow: 1px 1px 1px rgb(255, 255, 255);
+
+  margin: 0px;
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.OptionsToggle:hover .OptionsToggleText {
+  /* text-decoration: underline rgb(194, 2, 34) solid; */
+  color: rgb(253, 70, 101);
+}
+
+.OptionsToggle:hover .OptionsToggleArrow {
+    color: rgb(253, 70, 101);
+}
+
+.OptionsMobile {
+    background-color: #fafdff;
+  border-left: 1px solid #8d99ae;
+  border-bottom: 1px solid #8d99ae;
+  border-right: 1px solid #8d99ae;
+  border-top: 2px solid rgb(223, 228, 230);
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px 0px 15px;
+  margin: 0px 5px 5px 5px;
+  /* background-color: #F2F6F8; */
+  box-shadow: 0px 5px 5px #EDF2F4 inset;
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+}
+
+.ListContainerMobile {
+    margin: 2px 2px 2px 2px;
+    /* border: 1px solid #000; */
+}
+
+/* .OptionsMobile > button {
+    width: fit-content;
+} */
+
+/* .OptionsButtonMobile {
+    min-width: 70%;
+    width: fit-content;
+    align-self: center;
+} */
+/* https://colorzilla.com/gradient-editor/#f6f8f9+0,e5ebee+50,d7dee3+51,f5f7f9+100;White+Gloss  */
+/* #cfdae0 */

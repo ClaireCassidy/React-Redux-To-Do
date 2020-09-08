@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./List.css";
+import "./ListMobile.css";
 import ListItem from "./ListItem";
 import { useSelector, useDispatch } from "react-redux";
 import { SORT_CRITERIA } from "./constants";
@@ -10,35 +10,8 @@ import {
   setShowCompleted,
 } from "./Actions";
 
-// action : change page (pagination)
-// @TODO: Change number pages to reflect the number of VISIBLE list items, not the length of the whole unfiltered list of todos
-export default function List() {
-  // @TODO: remove *=================================
-  const todoItems = useSelector((state) => {
-    return state.todos;
-  });
-
-  const itemsPerPage = useSelector((state) => {
-    // console.log(todoItems);
-    return state.itemsPerPage;
-  });
-
-  const pageIndex = useSelector((state) => {
-    return state.pageIndex;
-  });
-  // *===============================================
-
-  //@TODO: Move to app.js
-  // *===============================================
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-  const viewBreakpoint = 620;
-
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      setViewportWidth(window.innerWidth);
-    });
-  }, []);
-  // *===============================================
+export default function ListMobile() {
+  const [optionsActive, setOptionsActive] = useState(false);
 
   const [sortCriterion, setSortCriterion] = useState(SORT_CRITERIA.NEW);
   const autoDeleteCompleted = useSelector((state) => {
@@ -105,127 +78,25 @@ export default function List() {
     dispatch(setAutoDeleteCompleted(!autoDeleteCompleted));
   };
 
-  if (viewportWidth < viewBreakpoint) {
-    return (
-      <>
-        <div className="MobileContainer">
+  return (
+    <>
+      {/* THE OPTIONS */}
+      <div
+        className="OptionsToggle"
+        onClick={() => {
+          setOptionsActive((optionsActive) => !optionsActive);
+        }}
+      >
+        <p className="OptionsToggleText">Options ...</p>
+        <p className="OptionsToggleArrow">⇵</p>
+      </div>
 
-          
-        <div className="ListRight">
-            <h3 className="OptionsHeader">Options ></h3>
+      {!optionsActive && <hr className="Divider" />}
 
-            <hr className="Divider" />
-
-            <div className="SortBySection OptionsItem">
-              <label className="SortBySelectLabel" htmlFor="SortBySelect">
-                Sort By:
-              </label>
-              <select
-                className="SortBySelect"
-                name="SortBySelect"
-                id="SortBySelect"
-                value={sortCriterion}
-                onChange={handleSortByChange}
-              >
-                <option value="NEW">Date Added (Newest)</option>
-                <option value="OLD">Date Added (Oldest)</option>
-                <option value="EXPIRY">Expires Soon</option>
-                <option value="IMPORTANT">Important First</option>
-              </select>
-            </div>
-
-            <hr className="Divider" />
-
-            <div className="ShowCompletedContainer OptionsItem">
-              <div>
-                <label htmlFor="show-completed">Show Completed To-Dos?</label>
-                <input
-                  name="show-completed"
-                  type="checkbox"
-                  checked={showCompletedTodos}
-                  onChange={handleToggleShowCompletedTodos}
-                />
-              </div>
-            </div>
-
-            <hr className="Divider" />
-
-            <div className="DeleteCompletedContainer OptionsItem">
-              <button
-                className="OptionsButton"
-                name="delete-completed"
-                onClick={handleDeleteCompletedTodos}
-              >
-                Delete Completed To-dos
-              </button>
-              <label className="CannotUndoLabel" htmlFor="delete-completed">
-                (This cannot be undone)
-              </label>
-              <div className="AutoDeleteCompletedContainer">
-                <label
-                  className="AutoDeleteCompletedLabel"
-                  htmlFor="auto-delete-completed"
-                >
-                  Do this automatically
-                </label>
-                <input
-                  name="auto-delete-completed"
-                  type="checkbox"
-                  checked={autoDeleteCompleted}
-                  onChange={toggleDeleteCompletedAutomatically}
-                />
-              </div>
-            </div>
-
-            <hr className="Divider" />
-
-            <div className="DeleteExpiredContainer OptionsItem">
-              <button className="OptionsButton" onClick={handleDeleteExpired}>
-                Delete Expired To-dos
-              </button>
-              <label className="CannotUndoLabel">(This cannot be undone)</label>
-            </div>
-          </div>
-          <h3 className="Showing">{`Showing (${startIndex}-${endIndex}) of ${numItems} items`}</h3>
-
-          <div className="ListContainer">
-            <div className="ListItemsContainer">
-              {visibleListItems.map((item) => {
-                return (
-                  <ListItem
-                    todoItem={item}
-                    key={item.dateAdded + Math.random()}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <>
-        {/* LIST */}
-        <h3 className="Showing">{`Showing (${startIndex}-${endIndex}) of ${numItems} items`}</h3>
-
-        <div className="ListContainer">
-          <div className="ListLeft">
-            <div className="ListItemsContainer">
-              {visibleListItems.map((item) => {
-                return (
-                  <ListItem
-                    todoItem={item}
-                    key={item.dateAdded + Math.random()}
-                  />
-                );
-              })}
-            </div>
-          </div>
-          <div className="ListRight">
-            <h3 className="OptionsHeader">Options</h3>
-
-            <hr className="Divider" />
+      {optionsActive && (
+        <>
+          <div className="OptionsMobile">
+            {/* <h3 className="OptionsHeader">Options</h3> */}
 
             <div className="SortBySection OptionsItem">
               <label className="SortBySelectLabel" htmlFor="SortBySelect">
@@ -297,10 +168,25 @@ export default function List() {
               <label className="CannotUndoLabel">(This cannot be undone)</label>
             </div>
           </div>
+
+          <hr className="Divider" />
+        </>
+      )}
+
+      {/* THE LIST */}
+      <h3 className="Showing">{`Showing (${startIndex}-${endIndex}) of ${numItems} items`}</h3>
+
+      <div className="ListContainerMobile">
+        <div className="ListItemsContainerMobile">
+          {visibleListItems.map((item) => {
+            return (
+              <ListItem todoItem={item} key={item.dateAdded + Math.random()} />
+            );
+          })}
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
 }
 
 const getVisibleListItems = (

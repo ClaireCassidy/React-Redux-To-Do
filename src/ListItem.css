@@ -6,7 +6,7 @@
 }
 
 .Completed {
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 .DateContainer {
@@ -42,6 +42,7 @@
 
 .TodoText {
   padding-left: 10px;
+  padding-right: 10px;
   white-space: pre-line;
 }
 

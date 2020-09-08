@@ -86,10 +86,6 @@
     padding: 2px 0px 2px 0px;
 }
 
-.OptionsButton:hover {
-    background-color: rgb(242, 246, 248);
-}
-
 .CannotUndoLabel {
     /* border: 1px solid #000; */
     margin-bottom: 5px;

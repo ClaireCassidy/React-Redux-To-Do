@@ -88,3 +88,9 @@ export const setShowCompleted = (payload) => {
         payload: payload
     }
 }
+
+export const loadDemoItems = () => {
+    return {
+        type: actionTypes.LOAD_DEMO_ITEMS
+    }
+}

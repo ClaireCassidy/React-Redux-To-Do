@@ -1,5 +1,5 @@
 import { actionTypes } from "../action-types";
-import { INITIAL_STATE, PAGE_CHANGE_DIRECTIONS } from "../constants.js";
+import { INITIAL_STATE, PAGE_CHANGE_DIRECTIONS, DEMO_ITEMS } from "../constants.js";
 
 
 //@TODO: Refactor reducer methods to use getIndexById
@@ -252,6 +252,11 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         showCompleted: action.payload,
         pageIndex: newPageIndex
       }))
+    }
+
+    //DEMO ACTIONS:
+    case (actionTypes.LOAD_DEMO_ITEMS): {
+
     }
     default:
       return state;
