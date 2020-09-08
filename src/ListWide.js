@@ -207,9 +207,35 @@ const applySortCriterion = (list, sortCriterion) => {
   // list items stored in order of addition
   //  means implicitly the list is sorted oldest - newest
   switch (sortCriterion) {
-    case SORT_CRITERIA.NEW:
-      return list.reverse();
     case SORT_CRITERIA.OLD:
+      // return list.reverse();
+      list.sort((a, b) => {
+        let aDateAdded = a.dateAdded;
+        let bDateAdded = b.dateAdded;
+
+        let aDateAddedUnixTime = Date.parse(aDateAdded);
+        let bDateAddedUnixTime = Date.parse(bDateAdded);
+
+        if (aDateAddedUnixTime === bDateAddedUnixTime) return 0;
+        if (aDateAddedUnixTime < bDateAddedUnixTime) return -1;
+        return 1;
+      });
+
+      return list;
+    case SORT_CRITERIA.NEW:
+
+      list.sort((a, b) => {
+        let aDateAdded = a.dateAdded;
+        let bDateAdded = b.dateAdded;
+
+        let aDateAddedUnixTime = Date.parse(aDateAdded);
+        let bDateAddedUnixTime = Date.parse(bDateAdded);
+
+        if (aDateAddedUnixTime === bDateAddedUnixTime) return 0;
+        if (aDateAddedUnixTime < bDateAddedUnixTime) return 1;
+        return -1;
+      });
+
       return list;
     case SORT_CRITERIA.IMPORTANT:
       list.sort((a, b) => {

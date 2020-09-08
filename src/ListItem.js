@@ -167,8 +167,11 @@ export default function ListItem({ todoItem }) {
       <div className="BottomBar">
         {/* Show the expiry date here if it has one */}
         <div className="ExpiresContainer">
-          <p className="ExpiresText">
-            {expires ? "Expires " + formatDate(expires) : "(No expiry set)"}
+          <p className={"ExpiresText "+(isExpired(expires) ? "ExpiredText" : "")}>
+            {expires && "Expires " + formatDate(expires)}
+            {expires && isExpired(expires) && <span className="Expired"> ! </span>}
+            {!expires && "( No expiry set )"}
+            {/* {expires ? "Expires " + formatDate(expires) + (isExpired(expires) ? <span className="Expired">"!"</span> : "") : "(No expiry set)"} */}
           </p>
           <div>
             <p className="EditExpiryText" onClick={handleEditExpiry}>
@@ -257,3 +260,12 @@ const formatDate = (rawDate) => {
 
   return `${day}/${month}/${year}, ${time}`;
 };
+
+const isExpired = (date) => {
+  const dateInUnixTime = Date.parse(date);
+  const dateNow = Date.now();
+
+  return (dateNow >= dateInUnixTime);
+
+  console.log(`Date passed: ${dateInUnixTime}, Date now: ${dateNow}`);
+}

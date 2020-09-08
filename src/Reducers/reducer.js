@@ -1,8 +1,10 @@
 import { actionTypes } from "../action-types";
-import { INITIAL_STATE, PAGE_CHANGE_DIRECTIONS, DEMO_ITEMS } from "../constants.js";
+import {
+  INITIAL_STATE,
+  PAGE_CHANGE_DIRECTIONS,
+  DEMO_ITEMS,
+} from "../constants.js";
 
-
-//@TODO: Refactor reducer methods to use getIndexById
 // @TODO: Combine reducers?
 
 export const rootReducer = (state = INITIAL_STATE, action) => {
@@ -58,23 +60,28 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       todosCopy.splice(index, 1);
 
       // adjust page index if necessary
-      let newPageIndex = validatePageNumber(state.pageIndex, state.itemsPerPage, todosCopy.length);
-      console.log(`Old page index ${state.pageIndex}, New page index: ${newPageIndex}`);
-
+      let newPageIndex = validatePageNumber(
+        state.pageIndex,
+        state.itemsPerPage,
+        todosCopy.length
+      );
+      console.log(
+        `Old page index ${state.pageIndex}, New page index: ${newPageIndex}`
+      );
 
       return Object.assign({}, state, {
         todos: todosCopy,
-        pageIndex: newPageIndex
+        pageIndex: newPageIndex,
       });
     }
-    case (actionTypes.TOGGLE_COMPLETE): {
+    case actionTypes.TOGGLE_COMPLETE: {
       const id = action.payload;
       let todosCopy = [...state.todos];
 
       // console.log("Toggling completed status of item w id "+id);
 
       let index = -1;
-      for (let i = 0; i<todosCopy.length; i++) {
+      for (let i = 0; i < todosCopy.length; i++) {
         if (todosCopy[i].id === id) {
           index = i;
           break;
@@ -92,7 +99,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         todos: todosCopy,
       });
     }
-    case (actionTypes.REMOVE_EXPIRY): {
+    case actionTypes.REMOVE_EXPIRY: {
       const id = action.payload;
       const todosCopy = [...state.todos];
 
@@ -104,18 +111,15 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       todosCopy.splice(index, 1, itemCopy);
 
       return Object.assign({}, state, {
-        todos: todosCopy
+        todos: todosCopy,
       });
-
     }
-    case (actionTypes.UPDATE_EXPIRY): {
-
+    case actionTypes.UPDATE_EXPIRY: {
       // console.log(JSON.stringify(action));
-      const {id, selectedExpiryDate} = action.payload;
+      const { id, selectedExpiryDate } = action.payload;
 
       const todosCopy = [...state.todos];
       // console.log(`id: ${id}, newExpiry: ${selectedExpiryDate}`);
-
 
       const index = getTodoIndexById(todosCopy, id);
       const itemCopy = Object.assign({}, todosCopy[index]);
@@ -126,11 +130,11 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       todosCopy.splice(index, 1, itemCopy);
 
       return Object.assign({}, state, {
-        todos: todosCopy
+        todos: todosCopy,
       });
     }
-    case (actionTypes.SUBMIT_TEXT_EDIT): {
-      const {id, newTodoText} = action.payload;
+    case actionTypes.SUBMIT_TEXT_EDIT: {
+      const { id, newTodoText } = action.payload;
       // console.log("Looking for item with id "+id);
 
       const todosCopy = [...state.todos];
@@ -144,17 +148,17 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       todosCopy.splice(index, 1, itemCopy);
 
       return Object.assign({}, state, {
-        todos: todosCopy
+        todos: todosCopy,
       });
     }
-    case (actionTypes.UPDATE_ITEMS_PER_PAGE): {
+    case actionTypes.UPDATE_ITEMS_PER_PAGE: {
       // console.log(action.payload);
       return Object.assign({}, state, {
         itemsPerPage: action.payload,
-        pageIndex: 0
-      })
+        pageIndex: 0,
+      });
     }
-    case (actionTypes.UPDATE_PAGE_NUMBER): {
+    case actionTypes.UPDATE_PAGE_NUMBER: {
       // console.log("Updating Page Number: "+action.payload);
 
       let updatedValue = 0;
@@ -170,14 +174,20 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
           let numTodos;
           if (!state.showCompleted) {
             const todosCopy = [...state.todos];
-            const nonCompletedTodos = todosCopy.filter((item) => {return !item.completed});
+            const nonCompletedTodos = todosCopy.filter((item) => {
+              return !item.completed;
+            });
             numTodos = nonCompletedTodos.length;
           } else {
             numTodos = state.todos.length;
           }
           // console.log("Num elligible todos: "+numTodos);
 
-          updatedValue = validatePageNumber(action.payload, state.itemsPerPage, numTodos);
+          updatedValue = validatePageNumber(
+            action.payload,
+            state.itemsPerPage,
+            numTodos
+          );
           // console.log(`Candidate Page Index : ${action.payload}\nAdjusted Page Index: ${updatedValue}`);
           break;
       }
@@ -188,9 +198,9 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
         pageIndex: updatedValue,
       });
     }
-    case (actionTypes.DELETE_ALL_EXPIRED): {
+    case actionTypes.DELETE_ALL_EXPIRED: {
       const todosCopy = [...state.todos];
-      
+
       const curTimeUnix = Date.now();
       console.log(`Cur Time Unix: ${curTimeUnix}`);
 
@@ -207,16 +217,22 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       });
 
       // adjust page index if necessary
-      let newPageIndex = validatePageNumber(state.pageIndex, state.itemsPerPage, nonExpiredItems.length);
-      console.log(`Old page index ${state.pageIndex}, New page index: ${newPageIndex}`);
+      let newPageIndex = validatePageNumber(
+        state.pageIndex,
+        state.itemsPerPage,
+        nonExpiredItems.length
+      );
+      console.log(
+        `Old page index ${state.pageIndex}, New page index: ${newPageIndex}`
+      );
 
-      console.log("Non-Expired Items: "+JSON.stringify(nonExpiredItems));
+      console.log("Non-Expired Items: " + JSON.stringify(nonExpiredItems));
       return Object.assign({}, state, {
         todos: nonExpiredItems,
-        pageIndex: newPageIndex
-      })
+        pageIndex: newPageIndex,
+      });
     }
-    case (actionTypes.DELETE_COMPLETED_TODOS): {
+    case actionTypes.DELETE_COMPLETED_TODOS: {
       let todosCopy = [...state.todos];
 
       let nonCompletedItems = todosCopy.filter((item) => {
@@ -224,48 +240,58 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       });
 
       // adjust page index if necessary
-      let newPageIndex = validatePageNumber(state.pageIndex, state.itemsPerPage, nonCompletedItems.length);
+      let newPageIndex = validatePageNumber(
+        state.pageIndex,
+        state.itemsPerPage,
+        nonCompletedItems.length
+      );
       // console.log(`Old page index ${state.pageIndex}, New page index: ${newPageIndex}`);
 
       // console.log(`Non-Completed Items: ${nonCompletedItems}`);
       return Object.assign({}, state, {
         todos: nonCompletedItems,
-        pageIndex: newPageIndex
+        pageIndex: newPageIndex,
       });
     }
-    case (actionTypes.SET_AUTO_DELETE_COMPLETED): {
-      return (Object.assign({}, state, {
-        autoDeleteCompleted: action.payload
-      }))
+    case actionTypes.SET_AUTO_DELETE_COMPLETED: {
+      return Object.assign({}, state, {
+        autoDeleteCompleted: action.payload,
+      });
     }
-    case (actionTypes.SET_SHOW_COMPLETED): {
-
+    case actionTypes.SET_SHOW_COMPLETED: {
       //console.log("DOIN IT");
       let newPageIndex = state.pageIndex;
 
-      // toggling visibility of todos may leave the user on an invalid page 
-      if (!action.payload) { // if were not showing completed todos ...
+      // toggling visibility of todos may leave the user on an invalid page
+      if (!action.payload) {
+        // if were not showing completed todos ...
         const todosCopy = [...state.todos];
-        const nonCompletedTodos = todosCopy.filter((item) => {return !item.completed});
+        const nonCompletedTodos = todosCopy.filter((item) => {
+          return !item.completed;
+        });
 
         // ... recalculate the max page number and adjust the current page number if necessary
-        const newPageNumber = validatePageNumber(state.pageIndex, state.itemsPerPage, nonCompletedTodos.length);
+        const newPageNumber = validatePageNumber(
+          state.pageIndex,
+          state.itemsPerPage,
+          nonCompletedTodos.length
+        );
         // console.log(`Old page number: ${parseInt(state.pageIndex)+1}, New Page number: ${parseInt(newPageNumber)+1}`);
         newPageIndex = newPageNumber;
       }
 
-      return (Object.assign({}, state, {
+      return Object.assign({}, state, {
         showCompleted: action.payload,
-        pageIndex: newPageIndex
-      }))
+        pageIndex: newPageIndex,
+      });
     }
 
     //DEMO ACTIONS:
-    case (actionTypes.LOAD_DEMO_ITEMS): {
+    case actionTypes.LOAD_DEMO_ITEMS: {
       return Object.assign({}, state, {
         todos: DEMO_ITEMS,
-        todoId: DEMO_ITEMS.length
-      })
+        todoId: DEMO_ITEMS.length,
+      });
     }
     default:
       return state;
@@ -273,15 +299,14 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
 };
 
 const getTodoIndexById = (list, id) => {
-
-  for (let i=0; i<list.length; i++) {
+  for (let i = 0; i < list.length; i++) {
     if (list[i].id === id) {
       return i;
     }
   }
 
   return -1;
-}
+};
 
 // check the page number is within bounds and if not return the closest valid page number
 // passed a 0-indexed page number
@@ -294,4 +319,4 @@ const validatePageNumber = (candidatePageNum, itemsPerPage, numTodos) => {
     if (candidatePageNum > maxPageIndex) return maxPageIndex;
   }
   return candidatePageNum;
-}
+};
