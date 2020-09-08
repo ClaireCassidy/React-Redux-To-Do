@@ -16,6 +16,13 @@
     padding-bottom: 5px;
 }
 
+.NoItemsTip {
+    padding: 0px 10px 0px 10px;
+    color: #8D99AE;
+    font-style: italic;
+    font-weight: 300;
+}
+
 .Showing {
     margin: 0px 0px 10px 10px;
     /* border: 1px solid blue; */

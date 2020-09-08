@@ -42,7 +42,7 @@ export default function ListMobile() {
   });
 
   const handleSortByChange = (e) => {
-    console.log(`Sort By change: ${e.target.value}`);
+    // console.log(`Sort By change: ${e.target.value}`);
     setSortCriterion(e.target.value);
   };
 
@@ -52,19 +52,19 @@ export default function ListMobile() {
   };
 
   const handleToggleShowCompletedTodos = (e) => {
-    console.log("Toggling show completed");
+    // console.log("Toggling show completed");
     // setShowCompletedTodos((showCompletedTodos) => !showCompletedTodos);
 
     dispatch(setShowCompleted(!showCompletedTodos));
   };
 
   const handleDeleteCompletedTodos = (e) => {
-    console.log("Deleting Completed Todos");
+    // console.log("Deleting Completed Todos");
     dispatch(deleteCompletedTodos());
   };
 
   const toggleDeleteCompletedAutomatically = (e) => {
-    console.log("Toggling delete completed automatically");
+    // console.log("Toggling delete completed automatically");
 
     // if we're setting it to true, we need to delete those todos currently marked active
     if (!autoDeleteCompleted) {
@@ -178,11 +178,21 @@ export default function ListMobile() {
 
       <div className="ListContainerMobile">
         <div className="ListItemsContainerMobile">
-          {visibleListItems.map((item) => {
-            return (
-              <ListItem todoItem={item} key={item.dateAdded + Math.random()} />
-            );
-          })}
+          {visibleListItems.length > 0 ? (
+            visibleListItems.map((item) => {
+              return (
+                <ListItem
+                  todoItem={item}
+                  key={item.dateAdded + Math.random()}
+                />
+              );
+            })
+          ) : (
+            <p className="NoItemsTip">
+              (Tip - You can quickly add demo items using the demo bar at the
+              top of the page)
+            </p>
+          )}
         </div>
       </div>
     </>
@@ -196,8 +206,8 @@ const getVisibleListItems = (
   sortCriterion,
   showCompleted
 ) => {
-  console.log(`Sort criterion: ${sortCriterion}`);
-  console.log(`Show completed? ${showCompleted}`);
+  // console.log(`Sort criterion: ${sortCriterion}`);
+  // console.log(`Show completed? ${showCompleted}`);
 
   let sortedList = applySortCriterion([...list], sortCriterion); // don't modify original
   // remove completed items if showCompleted not checked
@@ -231,7 +241,7 @@ const applySortCriterion = (list, sortCriterion) => {
         if (aIsImportant && !bIsImportant) return -1;
         return 1;
       });
-      console.log(JSON.stringify(list));
+      // console.log(JSON.stringify(list));
       return list;
     case SORT_CRITERIA.EXPIRY:
       // console.log("Not yet sweaty!!");
@@ -239,7 +249,7 @@ const applySortCriterion = (list, sortCriterion) => {
       list.sort((a, b) => {
         let aExpiry = a.expires;
         let bExpiry = b.expires;
-        console.log(`${aExpiry} | ${bExpiry}`);
+        // console.log(`${aExpiry} | ${bExpiry}`);
 
         // if neither have an expiry...
         if (aExpiry == null && bExpiry == null) return 0; // ... order irrelevant
@@ -251,10 +261,10 @@ const applySortCriterion = (list, sortCriterion) => {
         let aExpiryUnixTime = Date.parse(aExpiry);
         let bExpiryUnixTime = Date.parse(bExpiry);
 
-        console.log(
-          `A Expiry: ${aExpiry} (In unix time: ${aExpiryUnixTime}), B Expiry: ${bExpiry} (In unix time: ${bExpiryUnixTime})`
-        );
-        console.log(`A before B ? ${aExpiryUnixTime - bExpiryUnixTime <= 0}`);
+        // console.log(
+        //   `A Expiry: ${aExpiry} (In unix time: ${aExpiryUnixTime}), B Expiry: ${bExpiry} (In unix time: ${bExpiryUnixTime})`
+        // );
+        // console.log(`A before B ? ${aExpiryUnixTime - bExpiryUnixTime <= 0}`);
         return aExpiryUnixTime - bExpiryUnixTime;
       });
       return list;

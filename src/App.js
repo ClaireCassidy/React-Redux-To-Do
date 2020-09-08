@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { submitNewTodo } from "./Actions";
+import { submitNewTodo, loadDemoItems } from "./Actions";
 import { useDispatch, useSelector } from "react-redux";
 import ItemSubmissionForm from "./ItemSubmissionForm";
-import List from "./List";
+// import List from "./List";
 import ListWide from "./ListWide";
 import ListMobile from "./ListMobile";
 import Pagination from "./Pagination";
@@ -34,7 +34,7 @@ function App() {
       dateAdded: "2020-09-01T18:44",
       id: todoId,
       completed: false,
-      text: "Dummy",
+      text: "Sample Important Todo",
       important: true,
       expires: null,
     };
@@ -44,8 +44,46 @@ function App() {
 
   //DEMO:
   const addDemoItems = () => {
-    console.log("Adding Demo Items");
+    // console.log("Adding Demo Items");
+    dispatch(loadDemoItems());
   }
+
+  const addCompleteItem = () => {
+    // console.log("Adding complete Item");
+    let item = {
+      dateAdded: new Date().toISOString(),
+      id: todoId,
+      completed: true,
+      text: "Sample Completed Todo",
+      important: false,
+      expires: null
+    }
+
+    dispatch(submitNewTodo(item))
+  }
+
+  const addExpiredItem = () => {
+    console.log("Adding Expired Item");
+    let item = {
+      dateAdded: new Date().toISOString(),
+      id: todoId,
+      completed: false,
+      text: "Sample Expired Todo",
+      important: false,
+      expires: "2000-01-01T08:00"
+    };
+
+    dispatch(submitNewTodo(item));
+  }
+
+  // {
+  //   dateAdded: "2020-09-08T10:42",
+  //   id: 4,
+  //   completed: false,
+  //   text: `You can edit text for a submitted todo by hovering over it and clicking "edit" ...`,
+  //   important: false,
+  //   expires: "2020-10-01T00:00",
+  // },
   // *----------------------------------*
 
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
@@ -58,10 +96,15 @@ function App() {
   }, []);
 
   return (
+
+    // 830 px
     <>
       <div className="DemoBar">
         <p className="DemoBarHeader">Demo Bar »</p>
-        <p className="DemoBarItem" onClick={addDemoItems}>Add Demo Items</p>
+        <p className="DemoBarItem" onClick={addDemoItems}>Try Demo Items</p>
+        <p className="DemoBarItem" onClick={addImportantItem}>Add Important Item</p>
+        <p className="DemoBarItem" onClick={addExpiredItem}>Add Expired Item</p>
+        <p className="DemoBarItem" onClick={addCompleteItem}>Add Completed Item</p>
       </div>
       <div className="App">
         <h1 className="Header"> ➲ To-Do List</h1>

@@ -24,7 +24,7 @@ export default function ListItem({ todoItem }) {
   const [editTodoTextActive, setEditTodoTextActive] = useState(false);
   const [newTodoText, setNewTodoText] = useState(text);
   const autoDeleteCompleted = useSelector((state) => {
-    console.log("HERE" + state.autoDeleteCompleted);
+    // console.log("HERE" + state.autoDeleteCompleted);
     return state.autoDeleteCompleted;
   });
 
@@ -80,7 +80,7 @@ export default function ListItem({ todoItem }) {
 
   const handleTextEditSubmission = (e) => {
     if (newTodoText.length !== 0) {
-      console.log("submitting text edit");
+      // console.log("submitting text edit");
       dispatch(submitTextEdit({ id, newTodoText }));
     }
 
@@ -88,7 +88,7 @@ export default function ListItem({ todoItem }) {
   };
 
   const handleTextEditCancel = (e) => {
-    console.log("Text Edit cancelled");
+    // console.log("Text Edit cancelled");
 
     setNewTodoText(text);
     setEditTodoTextActive(false);
@@ -125,6 +125,7 @@ export default function ListItem({ todoItem }) {
               (edit)
             </p>
             <p className="TodoText">{`id: ${id}\ncompleted: ${completed}\n${text}`}</p>
+            {/* <p className="TodoText">{(text.length > 0 ? `${text}`:`(No Text)`)}</p> */}
           </>
         )}
         {editTodoTextActive && (
@@ -198,7 +199,7 @@ export default function ListItem({ todoItem }) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              console.log("Submitted");
+              // console.log("Submitted");
               handleExpirySubmission(e);
             }}
           >

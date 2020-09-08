@@ -11,7 +11,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case actionTypes.ADD_ITEM: {
-      console.log(`Adding this item: ${JSON.stringify(action.payload)}`);
+      // console.log(`Adding this item: ${JSON.stringify(action.payload)}`);
       return Object.assign({}, state, {
         todoId: state.todoId + 1,
         todos: [...state.todos, action.payload],
@@ -57,8 +57,14 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       //console.log(`Found todo item w id ${id} @ index ${index}`);
       todosCopy.splice(index, 1);
 
+      // adjust page index if necessary
+      let newPageIndex = validatePageNumber(state.pageIndex, state.itemsPerPage, todosCopy.length);
+      console.log(`Old page index ${state.pageIndex}, New page index: ${newPageIndex}`);
+
+
       return Object.assign({}, state, {
         todos: todosCopy,
+        pageIndex: newPageIndex
       });
     }
     case (actionTypes.TOGGLE_COMPLETE): {
@@ -125,14 +131,14 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
     }
     case (actionTypes.SUBMIT_TEXT_EDIT): {
       const {id, newTodoText} = action.payload;
-      console.log("Looking for item with id "+id);
+      // console.log("Looking for item with id "+id);
 
       const todosCopy = [...state.todos];
       const index = getTodoIndexById(todosCopy, id);
-      console.log(`Item w id ${id} @ index ${index}`);
+      // console.log(`Item w id ${id} @ index ${index}`);
 
       const itemCopy = Object.assign({}, todosCopy[index]);
-      console.log("The item:"+JSON.stringify(itemCopy));
+      // console.log("The item:"+JSON.stringify(itemCopy));
       itemCopy.text = newTodoText;
 
       todosCopy.splice(index, 1, itemCopy);
@@ -169,7 +175,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
           } else {
             numTodos = state.todos.length;
           }
-          console.log("Num elligible todos: "+numTodos);
+          // console.log("Num elligible todos: "+numTodos);
 
           updatedValue = validatePageNumber(action.payload, state.itemsPerPage, numTodos);
           // console.log(`Candidate Page Index : ${action.payload}\nAdjusted Page Index: ${updatedValue}`);
@@ -219,9 +225,9 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
 
       // adjust page index if necessary
       let newPageIndex = validatePageNumber(state.pageIndex, state.itemsPerPage, nonCompletedItems.length);
-      console.log(`Old page index ${state.pageIndex}, New page index: ${newPageIndex}`);
+      // console.log(`Old page index ${state.pageIndex}, New page index: ${newPageIndex}`);
 
-      console.log(`Non-Completed Items: ${nonCompletedItems}`);
+      // console.log(`Non-Completed Items: ${nonCompletedItems}`);
       return Object.assign({}, state, {
         todos: nonCompletedItems,
         pageIndex: newPageIndex
@@ -244,7 +250,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
 
         // ... recalculate the max page number and adjust the current page number if necessary
         const newPageNumber = validatePageNumber(state.pageIndex, state.itemsPerPage, nonCompletedTodos.length);
-        console.log(`Old page number: ${parseInt(state.pageIndex)+1}, New Page number: ${parseInt(newPageNumber)+1}`);
+        // console.log(`Old page number: ${parseInt(state.pageIndex)+1}, New Page number: ${parseInt(newPageNumber)+1}`);
         newPageIndex = newPageNumber;
       }
 
@@ -256,7 +262,10 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
 
     //DEMO ACTIONS:
     case (actionTypes.LOAD_DEMO_ITEMS): {
-
+      return Object.assign({}, state, {
+        todos: DEMO_ITEMS,
+        todoId: DEMO_ITEMS.length
+      })
     }
     default:
       return state;
@@ -280,7 +289,7 @@ const validatePageNumber = (candidatePageNum, itemsPerPage, numTodos) => {
   if (candidatePageNum < 0) {
     return 0;
   } else {
-    let maxPageIndex = Math.ceil(numTodos / itemsPerPage) - 1;
+    let maxPageIndex = Math.max(0, Math.ceil(numTodos / itemsPerPage) - 1);
     console.log(`Max page num : ${maxPageIndex}`);
     if (candidatePageNum > maxPageIndex) return maxPageIndex;
   }
