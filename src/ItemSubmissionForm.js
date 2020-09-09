@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./ItemSubmissionForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import { submitNewTodo } from "./Actions";
-import { getCurDate, getMaxDate, truncateISO } from "./utility.js"
+import { getCurDateUnix, getDatePickerStrFromUnix } from "./utility.js"
 
 export default function ItemSubmissionForm() {
   const [todoText, setTodoText] = useState("");
   const [expires, setExpires] = useState(false);
-  const [expiryDate, setExpiryDate] = useState(getCurDate());
+  const [expiryDate, setExpiryDate] = useState(getDatePickerStrFromUnix(getCurDateUnix()));
   const [important, setImportant] = useState(false);
 
   let todosList = useSelector((state) => {
@@ -21,31 +21,27 @@ export default function ItemSubmissionForm() {
   const handleTextAreaChange = (event) => {
     setTodoText(event.target.value);
     //console.log(todosList);
-    getCurDate();
   };
 
+  // Internal Date-Picker state
   const handleDatePickerChange = (event) => {
     //console.log(event.target.value);
     setExpiryDate(event.target.value);
   };
 
   const handleSubmission = (e) => {
-    let now = new Date();
-    now.setTime(now.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
-    now = now.toISOString();
-
     const newTodo = {
-      dateAdded: truncateISO(now),
+      dateAdded: getCurDateUnix(),
       id: todoId,
       completed: false,
       text: todoText,
       important: important,
-      expires: expires ? expiryDate : null,
-    };
+      expires: expires ? Date.parse(expiryDate) : null,
+    }
 
     setImportant(false);
     setTodoText("");
-    setExpiryDate(getCurDate());
+    setExpiryDate(getDatePickerStrFromUnix(getCurDateUnix()));
     setExpires(false);
 
     dispatch(submitNewTodo(newTodo));
@@ -101,8 +97,8 @@ export default function ItemSubmissionForm() {
                 id="expiry-date"
                 name="expiry-date"
                 value={expiryDate}
-                min={getCurDate()}
-                max={getMaxDate()}
+                min={getDatePickerStrFromUnix(getCurDateUnix())}
+                max={getDatePickerStrFromUnix(getCurDateUnix(1, 0, 0))}
                 onChange={handleDatePickerChange}
                 disabled={!expires}
               />
@@ -110,13 +106,6 @@ export default function ItemSubmissionForm() {
           </div>
 
           <div className="SubmissionFormGroupRight">
-            {/* <p className="ImportantToggle" onClick={handleImportantToggle}>
-              Important?{" "}
-              <span className="ImportantStar">
-                {important && "★"}
-                {!important && "☆"}
-              </span>
-            </p> */}
 
             <div className="ImportantStarContainer">
               <p className="ImportantToggle" onClick={handleImportantToggle}>
@@ -177,6 +166,7 @@ export default function ItemSubmissionForm() {
 //   return null;
 // };
 
+// @TODO: Reimplement this
 // truncates the seconds off the ISO string so it'll but formatted for the date picker
 // const truncateISO = (isoString) => {
 //   let fullDate = isoString;

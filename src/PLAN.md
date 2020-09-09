@@ -97,6 +97,12 @@
   }
 ```
 
+### Date Refactor:
+- Problem with sorting dates, string rep too imprecise to correctly sort items added in the same minute
+- All internal storage of dates (dateAdded, dateExpires) should be the unix timestamp vs. a string representation
+  - This means comparison of dates will be easier and also more precise
+- Any display of dates can then be the parsed version of the unix timestamp
+
 ✎✎✏✐
 
 ## State Tree:

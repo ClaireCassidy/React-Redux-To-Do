@@ -7,11 +7,9 @@ import {
   toggleComplete,
   removeExpiry,
   updateExpiry,
-  sumbitTextEdit,
-  submitNewTodo,
   submitTextEdit,
 } from "./Actions";
-import { getCurDate, getMaxDate } from "./utility.js";
+import { getCurDateUnix, getFormattedDateFromUnix, getDatePickerStrFromUnix } from "./utility.js";
 
 // action : mark completed
 
@@ -48,10 +46,11 @@ export default function ListItem({ todoItem }) {
   const handleEditExpiry = (e) => {
     //console.log("Activated Expiry Edit");
     setExpiryPickerActive(true);
+    setSelectedExpiryDate(expires ? expires : getDatePickerStrFromUnix(getCurDateUnix()));
   };
 
   const handleDatePickerChange = (e) => {
-    //console.log(e.target.value);
+    console.log(e.target.value);
     setSelectedExpiryDate(e.target.value);
   };
 
@@ -70,10 +69,14 @@ export default function ListItem({ todoItem }) {
   };
 
   const handleExpirySubmission = (e) => {
-    // console.log("submitted");
-    // console.log(`${selectedExpiryDate}`);
+    console.log(`Selected Expiry Date: ${selectedExpiryDate}
+                  \n New Date(): ${new Date(selectedExpiryDate)}
+                  \n As unix: ${Date.parse(new Date(selectedExpiryDate))}`);
+    const selectedExpiryDateUnix = Date.parse(new Date(selectedExpiryDate));
+    // console.log("Selected Expiry Date: " + selectedExpiryDate + ", Unix: "+selectedExpiryDateUnix);
 
-    dispatch(updateExpiry({ id, selectedExpiryDate }));
+    // console.log(selectedExpiryDateUnix);
+    dispatch(updateExpiry({ id, selectedExpiryDateUnix }));
     setSelectedExpiryDate(null);
     setExpiryPickerActive(false);
   };
@@ -109,7 +112,7 @@ export default function ListItem({ todoItem }) {
     >
       {/* DATE */}
       <div className="DateContainer">
-        <p className="DateAdded">{formatDate(dateAdded)}</p>
+        <p className="DateAdded">{getFormattedDateFromUnix(dateAdded)}</p>
       </div>
 
       {/* TODO BODY */}
@@ -167,9 +170,16 @@ export default function ListItem({ todoItem }) {
       <div className="BottomBar">
         {/* Show the expiry date here if it has one */}
         <div className="ExpiresContainer">
-          <p className={"ExpiresText "+(isExpired(expires) ? "ExpiredText" : "")}>
-            {expires && "Expires " + formatDate(expires)}
-            {expires && isExpired(expires) && <span className="Expired"> ! </span>}
+          <p
+            className={
+              "ExpiresText " + (isExpired(expires) ? "ExpiredText" : "")
+            }
+          >
+            {/* @TODO: Reinstate with getFormattedDateFromUnix() */}
+            {expires && "Expires " + getFormattedDateFromUnix(expires)}
+            {expires && isExpired(expires) && (
+              <span className="Expired"> ! </span>
+            )}
             {!expires && "( No expiry set )"}
             {/* {expires ? "Expires " + formatDate(expires) + (isExpired(expires) ? <span className="Expired">"!"</span> : "") : "(No expiry set)"} */}
           </p>
@@ -214,9 +224,14 @@ export default function ListItem({ todoItem }) {
                   type="datetime-local"
                   id="expiry-date"
                   name="expiry-date"
-                  value={selectedExpiryDate || expires || getCurDate()}
-                  min={getCurDate()}
-                  max={getMaxDate()}
+                  value={
+                    selectedExpiryDate ||
+                    (expires && getDatePickerStrFromUnix(expires)) ||
+                    getDatePickerStrFromUnix(getCurDateUnix())
+                  }
+                  // @TODO: Reinstate
+                  min={getDatePickerStrFromUnix(getCurDateUnix())}
+                  max={getDatePickerStrFromUnix(getCurDateUnix(1, 0, 0))}
                   onChange={handleDatePickerChange}
                 />
               </div>
@@ -246,26 +261,45 @@ export default function ListItem({ todoItem }) {
         )}
       </div>
 
-      {/* <p>{JSON.stringify(todoItem)}</p>
-            <p>{`${dateAdded}, ${listIndex}, ${text}, ${important}, ${expires}`}</p> */}
+      {/* {console.log(`                    ${selectedExpiryDate} \n
+                    ${expires && getDatePickerStrFromUnix(expires)} \n
+                    ${getDatePickerStrFromUnix(getCurDateUnix())}`)} */}
+
+      <p>{JSON.stringify(todoItem)}</p>
+      {/*  <p>{`${dateAdded}, ${listIndex}, ${text}, ${important}, ${expires}`}</p> */}
     </div>
   );
 }
 
-const formatDate = (rawDate) => {
-  const [date, time] = rawDate.split("T");
-  const [year, month, day] = date.split("-");
-  //console.log(`Date: ${date}, Time: ${time}`);
-  //console.log(`Day: ${day}, Month: ${month}, Year: ${year}`);
+// const formatUnixDate = (rawDate) => {
+//   // console.log("Parsed date: "+Date.parse(rawDate));
+//   console.log(`Parsed date: `+(new Date(rawDate).toISOString()));
+//   let parsedDate = new Date(rawDate).toISOString();
 
-  return `${day}/${month}/${year}, ${time}`;
-};
+//   const [date, time] = parsedDate.split("T");
+//   const [year, month, day] = date.split("-");
+//   //console.log(`Date: ${date}, Time: ${time}`);
+//   //console.log(`Day: ${day}, Month: ${month}, Year: ${year}`);
+
+//   return `${day}/${month}/${year}, ${time}`;
+
+//   // return rawDate;
+// }
+
+// const formatDate = (rawDate) => {
+//   const [date, time] = rawDate.split("T");
+//   const [year, month, day] = date.split("-");
+//   //console.log(`Date: ${date}, Time: ${time}`);
+//   //console.log(`Day: ${day}, Month: ${month}, Year: ${year}`);
+
+//   return `${day}/${month}/${year}, ${time}`;
+// };
 
 const isExpired = (date) => {
   const dateInUnixTime = Date.parse(date);
   const dateNow = Date.now();
 
-  return (dateNow >= dateInUnixTime);
+  return dateNow >= dateInUnixTime;
 
   console.log(`Date passed: ${dateInUnixTime}, Date now: ${dateNow}`);
-}
+};

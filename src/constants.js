@@ -103,7 +103,6 @@ export const SORT_CRITERIA = {
   IMPORTANT: "IMPORTANT",
 };
 
-// @TODO: set todoId back to !! 1 !! when test todos removed
 export const INITIAL_STATE = {
   // unique key for each todo item, incr each time a new item added
   todoId: testItems.length,
@@ -203,4 +202,3 @@ export const DEMO_ITEMS = [
 
 //@TODO: Change sorts to actually look at date vs list order
 //@TODO: Change Demo Items to dynamically choose dates that aren't expired unless required to be expired (cos someone might look in 2 years and go to try  demo delete expired todos and they all delete)
-//@TODO: Add a visual indicator for expired todos (red "!"?)

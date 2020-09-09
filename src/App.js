@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { submitNewTodo, loadDemoItems } from "./Actions";
 import { useDispatch, useSelector } from "react-redux";
-// import { getCurDate } from "./utility";
 import ItemSubmissionForm from "./ItemSubmissionForm";
 // import List from "./List";
 import ListWide from "./ListWide";
 import ListMobile from "./ListMobile";
 import Pagination from "./Pagination";
-import { getCurDate } from "./utility";
+import { getCurDateUnix } from "./utility";
 
 function App() {
   // *- DEBUG/DEMO: ------------------------*
@@ -20,7 +19,7 @@ function App() {
 
   const addDummyItem = () => {
     const dummyItem = {
-      dateAdded: "2020-09-01T18:44",
+      dateAdded: getCurDateUnix(),
       id: todoId,
       completed: false,
       text: "Dummy",
@@ -33,7 +32,7 @@ function App() {
 
   const addImportantItem = () => {
     const dummyItem = {
-      dateAdded: "2020-09-01T18:44",
+      dateAdded: getCurDateUnix(),
       id: todoId,
       completed: false,
       text: "Sample Important Todo",
@@ -53,7 +52,7 @@ function App() {
   const addCompleteItem = () => {
     // console.log("Adding complete Item");
     let item = {
-      dateAdded: getCurDate(),
+      dateAdded: getCurDateUnix(),
       id: todoId,
       completed: true,
       text: "Sample Completed Todo",
@@ -67,27 +66,16 @@ function App() {
   const addExpiredItem = () => {
     console.log("Adding Expired Item");
     let item = {
-      dateAdded: getCurDate(),
+      dateAdded: getCurDateUnix(),
       id: todoId,
       completed: false,
       text: "Sample Expired Todo",
       important: false,
-      expires: "2000-01-01T08:00"
+      expires: Date.parse("04 Dec 2015 00:12:00 GMT")
     };
 
     dispatch(submitNewTodo(item));
   }
-
-  // {
-  //   dateAdded: "2020-09-08T10:42",
-  //   id: 4,
-  //   completed: false,
-  //   text: `You can edit text for a submitted todo by hovering over it and clicking "edit" ...`,
-  //   important: false,
-  //   expires: "2020-10-01T00:00",
-  // },
-  // *----------------------------------*
-
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const viewBreakpoint = 720;
 

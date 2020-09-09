@@ -126,7 +126,7 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       // console.log(JSON.stringify(itemCopy));
 
       itemCopy.expires = selectedExpiryDate;
-      // console.log(JSON.stringify(itemCopy));
+      console.log(JSON.stringify(itemCopy));
       todosCopy.splice(index, 1, itemCopy);
 
       return Object.assign({}, state, {
