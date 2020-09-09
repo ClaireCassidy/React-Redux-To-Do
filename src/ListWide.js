@@ -204,6 +204,7 @@ const getVisibleListItems = (
 };
 
 const applySortCriterion = (list, sortCriterion) => {
+  console.log("WIDE");
   // list items stored in order of addition
   //  means implicitly the list is sorted oldest - newest
   switch (sortCriterion) {
@@ -212,11 +213,17 @@ const applySortCriterion = (list, sortCriterion) => {
       list.sort((a, b) => {
         let aDateAdded = a.dateAdded;
         let bDateAdded = b.dateAdded;
+        let aID = a.id;
+        let bID = b.id;
 
         let aDateAddedUnixTime = Date.parse(aDateAdded);
         let bDateAddedUnixTime = Date.parse(bDateAdded);
 
-        if (aDateAddedUnixTime === bDateAddedUnixTime) return 0;
+        if (aDateAddedUnixTime === bDateAddedUnixTime) {
+          // were submitted in the same minute, so check id as a fall back
+          if (a.id > b.id) return 1;
+          return -1;
+        };
         if (aDateAddedUnixTime < bDateAddedUnixTime) return -1;
         return 1;
       });
@@ -228,10 +235,19 @@ const applySortCriterion = (list, sortCriterion) => {
         let aDateAdded = a.dateAdded;
         let bDateAdded = b.dateAdded;
 
+        let aID = a.id;
+        let bID = b.id;
+
         let aDateAddedUnixTime = Date.parse(aDateAdded);
         let bDateAddedUnixTime = Date.parse(bDateAdded);
 
-        if (aDateAddedUnixTime === bDateAddedUnixTime) return 0;
+        console.log(`Comparing items with aID: ${aID} bID: ${bID}\n aUnixTime: ${aDateAddedUnixTime}, bUnixTime: ${bDateAddedUnixTime}`);
+
+        if (aDateAddedUnixTime === bDateAddedUnixTime) {
+          // were submitted in the same minute, so check id as a fall back
+          if (a.id > b.id) return -1;
+          return 1;
+        };
         if (aDateAddedUnixTime < bDateAddedUnixTime) return 1;
         return -1;
       });
