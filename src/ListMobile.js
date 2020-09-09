@@ -43,6 +43,7 @@ export default function ListMobile() {
 
   const handleSortByChange = (e) => {
     // console.log(`Sort By change: ${e.target.value}`);
+    console.log(`Cur Sort Criterion: ${sortCriterion}, New Sort Criterion: ${e.target.value}`);
     setSortCriterion(e.target.value);
   };
 
@@ -228,9 +229,50 @@ const applySortCriterion = (list, sortCriterion) => {
   // list items stored in order of addition
   //  means implicitly the list is sorted oldest - newest
   switch (sortCriterion) {
-    case SORT_CRITERIA.NEW:
-      return list.reverse();
     case SORT_CRITERIA.OLD:
+      // return list.reverse();
+      list.sort((a, b) => {
+        let aDateAdded = a.dateAdded;
+        let bDateAdded = b.dateAdded;
+        let aID = a.id;
+        let bID = b.id;
+
+        let aDateAddedUnixTime = Date.parse(aDateAdded);
+        let bDateAddedUnixTime = Date.parse(bDateAdded);
+
+        if (aDateAddedUnixTime === bDateAddedUnixTime) {
+          // were submitted in the same minute, so check id as a fall back
+          if (a.id > b.id) return 1;
+          return -1;
+        };
+        if (aDateAddedUnixTime < bDateAddedUnixTime) return -1;
+        return 1;
+      });
+
+      return list;
+    case SORT_CRITERIA.NEW:
+
+      list.sort((a, b) => {
+        let aDateAdded = a.dateAdded;
+        let bDateAdded = b.dateAdded;
+
+        let aID = a.id;
+        let bID = b.id;
+
+        let aDateAddedUnixTime = Date.parse(aDateAdded);
+        let bDateAddedUnixTime = Date.parse(bDateAdded);
+
+        console.log(`Comparing items with aID: ${aID} bID: ${bID}\n aUnixTime: ${aDateAddedUnixTime}, bUnixTime: ${bDateAddedUnixTime}`);
+
+        if (aDateAddedUnixTime === bDateAddedUnixTime) {
+          // were submitted in the same minute, so check id as a fall back
+          if (a.id > b.id) return -1;
+          return 1;
+        };
+        if (aDateAddedUnixTime < bDateAddedUnixTime) return 1;
+        return -1;
+      });
+
       return list;
     case SORT_CRITERIA.IMPORTANT:
       list.sort((a, b) => {

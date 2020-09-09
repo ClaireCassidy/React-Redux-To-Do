@@ -8,6 +8,7 @@ import {
   deleteCompletedTodos,
   setAutoDeleteCompleted,
   setShowCompleted,
+  changePageNumber
 } from "./Actions";
 
 export default function ListWide() {
@@ -41,6 +42,7 @@ export default function ListWide() {
 
   const handleSortByChange = (e) => {
     // console.log(`Sort By change: ${e.target.value}`);
+    dispatch(changePageNumber(0));
     setSortCriterion(e.target.value);
   };
 
@@ -204,7 +206,6 @@ const getVisibleListItems = (
 };
 
 const applySortCriterion = (list, sortCriterion) => {
-  console.log("WIDE");
   // list items stored in order of addition
   //  means implicitly the list is sorted oldest - newest
   switch (sortCriterion) {

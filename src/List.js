@@ -11,9 +11,9 @@ import {
 } from "./Actions";
 
 // action : change page (pagination)
-// @TODO: Change number pages to reflect the number of VISIBLE list items, not the length of the whole unfiltered list of todos
+// Change number pages to reflect the number of VISIBLE list items, not the length of the whole unfiltered list of todos
 export default function List() {
-  // @TODO: remove *=================================
+  //remove *=================================
   const todoItems = useSelector((state) => {
     return state.todos;
   });
@@ -28,7 +28,7 @@ export default function List() {
   });
   // *===============================================
 
-  //@TODO: Move to app.js
+  //Move to app.js
   // *===============================================
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const viewBreakpoint = 620;
