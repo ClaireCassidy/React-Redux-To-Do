@@ -1,5 +1,6 @@
 # React-Redux-To-Do
 To-Do List app using Redux and React
+https://clairecassidy.github.io/React-Redux-To-Do/
 
 ## Motivation
 To practise front-end development, in particular React and Redux, by building a useful tool that requires data sharing between multiple distinct components as well as dealing efficiently with derived state. 
