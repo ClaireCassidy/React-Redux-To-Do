@@ -8,6 +8,7 @@ import {
   deleteCompletedTodos,
   setAutoDeleteCompleted,
   setShowCompleted,
+  changePageNumber
 } from "./Actions";
 
 export default function ListMobile() {
@@ -42,6 +43,7 @@ export default function ListMobile() {
   });
 
   const handleSortByChange = (e) => {
+    dispatch(changePageNumber(0));
     setSortCriterion(e.target.value);
   };
 

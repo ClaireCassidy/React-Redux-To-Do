@@ -155,7 +155,7 @@ export const DEMO_ITEMS = [
     id: 15,
     completed: false,
     text: `Replace ink in printer`,
-    important: false,
+    important: true,
     expires: null,
   },  {
     dateAdded: "2020-03-26T19:39",
@@ -163,7 +163,7 @@ export const DEMO_ITEMS = [
     completed: false,
     text: `Change lightbulb`,
     important: false,
-    expires: null,
+    expires: "2020-01-01T13:21",
   },  {
     dateAdded: "2020-08-01T13:21",
     id: 17,
@@ -183,7 +183,7 @@ export const DEMO_ITEMS = [
     id: 19,
     completed: false,
     text: `Mop kitchen`,
-    important: false,
+    important: true,
     expires: null,
   },  {
     dateAdded: "2020-09-01T08:42",
@@ -191,7 +191,7 @@ export const DEMO_ITEMS = [
     completed: false,
     text: `Take out bins`,
     important: false,
-    expires: null,
+    expires: "2020-02-07T17:11",
   },  {
     dateAdded: "2020-02-18T11:47",
     id: 21,

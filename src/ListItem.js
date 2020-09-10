@@ -108,7 +108,7 @@ export default function ListItem({ todoItem }) {
             >
               (edit)
             </p>
-            <p className="TodoText">{`id: ${id}\ncompleted: ${completed}\n${text}`}</p>
+            <p className="TodoText">{text.length === 0 ? `( No Text )` : `${text}`}</p>
           </>
         )}
         {editTodoTextActive && (
