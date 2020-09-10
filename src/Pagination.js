@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Pagination.css";
 import { ITEMS_PER_PAGE_INCREMENTS, PAGE_CHANGE_DIRECTIONS } from "./constants";
@@ -11,10 +11,7 @@ export default function Pagination() {
     return state.pageIndex;
   });
 
-  //const [internalPageNumber, setInternalPageNumber] = useState(1);
-
   const handleItemsPerPageChange = (noItems) => {
-    // console.log(`NoItems: ${noItems}`);
     dispatch(updateItemsPerPage(noItems));
   };
 
@@ -38,13 +35,8 @@ export default function Pagination() {
   };
 
   const [prevDisabled, nextDisabled] = useSelector((state) => {
-    // console.log(`Cur page index: ${state.pageIndex}`);
-    // console.log(`Todos per page: ${state.itemsPerPage}`);
-    // console.log(`No. todos: ${state.todos.length}`);
     let isPrevDisabled = state.pageIndex === 0;
-    // console.log(
-    //   state.todos.length - (state.pageIndex + 1) * state.itemsPerPage
-    // );
+
     let todosCopy = [...state.todos];
     let numTodos = state.todos.length;
 
@@ -57,11 +49,8 @@ export default function Pagination() {
     return [isPrevDisabled, isNextDisabled];
   });
 
-  const showCompleted = useSelector((state) => {return state.showCompleted});
-
   return (
     <>
-    {/* <p>Show Completed ? : {""+showCompleted}</p> */}
       <div className="PaginationContainerOuter">
         <div className="PaginationContainerInner">
           <div className="ItemsPerPageContainer">
@@ -91,7 +80,6 @@ export default function Pagination() {
               {ITEMS_PER_PAGE_INCREMENTS[2]}
             </button>
           </div>
-          {/* <div className="VerticalDivider">❘</div> */}
           <div className="PageNumberContainer">
             <button
               className="PageNumberButton PagePrev"
@@ -112,8 +100,6 @@ export default function Pagination() {
                 e.target.placeholder = "";
               }}
               onKeyPress={handlePageNumberInput}
-              // value={pageNumber + 1}
-              // onChange={handlePageNumberInput}
               onBlur={handlePageNumberInput}
             />
             <button

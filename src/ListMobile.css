@@ -1,11 +1,8 @@
 .OptionsToggle {
-  /* border: 2px double rgb(141, 153, 174); */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* padding: 0px 15px 0px 15px; */
-  /* margin: -5px 5px 5px 5px; */
   margin: -10px 0px 0px 0px;
   padding: 0px 20px 0px 20px;
   border-top: 2px double rgb(223, 228, 230);
@@ -46,7 +43,6 @@
   font-weight: 400;
   letter-spacing: 0.05em;
   padding: 0px;
-  /* border: 1px solid #000; */
   margin: 0px;
 }
 
@@ -62,7 +58,6 @@
 }
 
 .OptionsToggle:hover .OptionsToggleText {
-  /* text-decoration: underline rgb(194, 2, 34) solid; */
   color: rgb(253, 70, 101);
 }
 
@@ -80,7 +75,6 @@
   flex-direction: column;
   padding: 5px 15px 0px 15px;
   margin: 0px 5px 5px 5px;
-  /* background-color: #F2F6F8; */
   box-shadow: 0px 5px 5px #EDF2F4 inset;
   font-size: 0.85em;
   letter-spacing: 0.05em;
@@ -88,17 +82,7 @@
 
 .ListContainerMobile {
     margin: 2px 2px 2px 2px;
-    /* border: 1px solid #000; */
 }
 
-/* .OptionsMobile > button {
-    width: fit-content;
-} */
-
-/* .OptionsButtonMobile {
-    min-width: 70%;
-    width: fit-content;
-    align-self: center;
-} */
 /* https://colorzilla.com/gradient-editor/#f6f8f9+0,e5ebee+50,d7dee3+51,f5f7f9+100;White+Gloss  */
 /* #cfdae0 */

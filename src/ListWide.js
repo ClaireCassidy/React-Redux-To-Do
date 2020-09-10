@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ListWide.css";
 import ListItem from "./ListItem";
 import { useSelector, useDispatch } from "react-redux";
@@ -41,40 +41,29 @@ export default function ListWide() {
   });
 
   const handleSortByChange = (e) => {
-    // console.log(`Sort By change: ${e.target.value}`);
     dispatch(changePageNumber(0));
     setSortCriterion(e.target.value);
   };
 
   const handleDeleteExpired = (e) => {
-    console.log("Deleting expired todos");
     dispatch(deleteExpiredTodos());
   };
 
   const handleToggleShowCompletedTodos = (e) => {
-    // console.log("Toggling show completed");
-    // setShowCompletedTodos((showCompletedTodos) => !showCompletedTodos);
-
     dispatch(setShowCompleted(!showCompletedTodos));
   };
 
   const handleDeleteCompletedTodos = (e) => {
-    // console.log("Deleting Completed Todos");
     dispatch(deleteCompletedTodos());
   };
 
   const toggleDeleteCompletedAutomatically = (e) => {
-    // console.log("Toggling delete completed automatically");
 
     // if we're setting it to true, we need to delete those todos currently marked active
     if (!autoDeleteCompleted) {
       dispatch(deleteCompletedTodos());
     }
 
-    //
-    // setDeleteCompletedAutomatically(
-    //   (deleteCompletedAutomatically) => !deleteCompletedAutomatically
-    // );
     dispatch(setAutoDeleteCompleted(!autoDeleteCompleted));
   };
 
@@ -187,8 +176,6 @@ const getVisibleListItems = (
   sortCriterion,
   showCompleted
 ) => {
-  // console.log(`Sort criterion: ${sortCriterion}`);
-  // console.log(`Show completed? ${showCompleted}`);
 
   let sortedList = applySortCriterion([...list], sortCriterion); // don't modify original
   // remove completed items if showCompleted not checked
@@ -201,7 +188,6 @@ const getVisibleListItems = (
   const startIndex = itemsPerPage * pageIndex;
 
   const subset = sortedList.slice(startIndex, startIndex + itemsPerPage);
-  // console.log(subset);
   return subset;
 };
 
@@ -210,7 +196,6 @@ const applySortCriterion = (list, sortCriterion) => {
   //  means implicitly the list is sorted oldest - newest
   switch (sortCriterion) {
     case SORT_CRITERIA.OLD:
-      // return list.reverse();
       list.sort((a, b) => {
         let aDateAdded = a.dateAdded;
         let bDateAdded = b.dateAdded;
@@ -242,8 +227,6 @@ const applySortCriterion = (list, sortCriterion) => {
         let aDateAddedUnixTime = Date.parse(aDateAdded);
         let bDateAddedUnixTime = Date.parse(bDateAdded);
 
-        console.log(`Comparing items with aID: ${aID} bID: ${bID}\n aUnixTime: ${aDateAddedUnixTime}, bUnixTime: ${bDateAddedUnixTime}`);
-
         if (aDateAddedUnixTime === bDateAddedUnixTime) {
           // were submitted in the same minute, so check id as a fall back
           if (a.id > b.id) return -1;
@@ -263,15 +246,12 @@ const applySortCriterion = (list, sortCriterion) => {
         if (aIsImportant && !bIsImportant) return -1;
         return 1;
       });
-      // console.log(JSON.stringify(list));
       return list;
     case SORT_CRITERIA.EXPIRY:
-      // console.log("Not yet sweaty!!");
 
       list.sort((a, b) => {
         let aExpiry = a.expires;
         let bExpiry = b.expires;
-        // console.log(`${aExpiry} | ${bExpiry}`);
 
         // if neither have an expiry...
         if (aExpiry == null && bExpiry == null) return 0; // ... order irrelevant
@@ -283,10 +263,6 @@ const applySortCriterion = (list, sortCriterion) => {
         let aExpiryUnixTime = Date.parse(aExpiry);
         let bExpiryUnixTime = Date.parse(bExpiry);
 
-        // console.log(
-        //   `A Expiry: ${aExpiry} (In unix time: ${aExpiryUnixTime}), B Expiry: ${bExpiry} (In unix time: ${bExpiryUnixTime})`
-        // );
-        // console.log(`A before B ? ${aExpiryUnixTime - bExpiryUnixTime <= 0}`);
         return aExpiryUnixTime - bExpiryUnixTime;
       });
       return list;

@@ -7,13 +7,9 @@ import {
   toggleComplete,
   removeExpiry,
   updateExpiry,
-  sumbitTextEdit,
-  submitNewTodo,
   submitTextEdit,
 } from "./Actions";
 import { getCurDate, getMaxDate } from "./utility.js";
-
-// action : mark completed
 
 export default function ListItem({ todoItem }) {
   const { dateAdded, id, completed, text, important, expires } = todoItem;
@@ -24,7 +20,6 @@ export default function ListItem({ todoItem }) {
   const [editTodoTextActive, setEditTodoTextActive] = useState(false);
   const [newTodoText, setNewTodoText] = useState(text);
   const autoDeleteCompleted = useSelector((state) => {
-    // console.log("HERE" + state.autoDeleteCompleted);
     return state.autoDeleteCompleted;
   });
 
@@ -46,17 +41,14 @@ export default function ListItem({ todoItem }) {
   };
 
   const handleEditExpiry = (e) => {
-    //console.log("Activated Expiry Edit");
     setExpiryPickerActive(true);
   };
 
   const handleDatePickerChange = (e) => {
-    //console.log(e.target.value);
     setSelectedExpiryDate(e.target.value);
   };
 
   const handleExpiryRemove = (e) => {
-    //console.log("Expiry Removal Triggered");
     dispatch(removeExpiry(id));
 
     setSelectedExpiryDate(null);
@@ -64,15 +56,11 @@ export default function ListItem({ todoItem }) {
   };
 
   const handleCancelExpiryEdit = (e) => {
-    //console.log("Cancel Expiry Edit Triggered");
     setSelectedExpiryDate(null);
     setExpiryPickerActive(false);
   };
 
   const handleExpirySubmission = (e) => {
-    // console.log("submitted");
-    // console.log(`${selectedExpiryDate}`);
-
     dispatch(updateExpiry({ id, selectedExpiryDate }));
     setSelectedExpiryDate(null);
     setExpiryPickerActive(false);
@@ -80,7 +68,6 @@ export default function ListItem({ todoItem }) {
 
   const handleTextEditSubmission = (e) => {
     if (newTodoText.length !== 0) {
-      // console.log("submitting text edit");
       dispatch(submitTextEdit({ id, newTodoText }));
     }
 
@@ -88,14 +75,11 @@ export default function ListItem({ todoItem }) {
   };
 
   const handleTextEditCancel = (e) => {
-    // console.log("Text Edit cancelled");
-
     setNewTodoText(text);
     setEditTodoTextActive(false);
   };
 
   const handleEditTextAreaChange = (e) => {
-    //console.log("changed: "+e.target.value);
     setNewTodoText(e.target.value);
   };
 
@@ -125,11 +109,9 @@ export default function ListItem({ todoItem }) {
               (edit)
             </p>
             <p className="TodoText">{`id: ${id}\ncompleted: ${completed}\n${text}`}</p>
-            {/* <p className="TodoText">{(text.length > 0 ? `${text}`:`(No Text)`)}</p> */}
           </>
         )}
         {editTodoTextActive && (
-          // <p> active !</p>
           <>
             <textarea
               className="EditTextTextarea"
@@ -171,7 +153,6 @@ export default function ListItem({ todoItem }) {
             {expires && "Expires " + formatDate(expires)}
             {expires && isExpired(expires) && <span className="Expired"> ! </span>}
             {!expires && "( No expiry set )"}
-            {/* {expires ? "Expires " + formatDate(expires) + (isExpired(expires) ? <span className="Expired">"!"</span> : "") : "(No expiry set)"} */}
           </p>
           <div>
             <p className="EditExpiryText" onClick={handleEditExpiry}>
@@ -202,7 +183,6 @@ export default function ListItem({ todoItem }) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              // console.log("Submitted");
               handleExpirySubmission(e);
             }}
           >
@@ -245,9 +225,6 @@ export default function ListItem({ todoItem }) {
           </form>
         )}
       </div>
-
-      {/* <p>{JSON.stringify(todoItem)}</p>
-            <p>{`${dateAdded}, ${listIndex}, ${text}, ${important}, ${expires}`}</p> */}
     </div>
   );
 }
@@ -255,8 +232,6 @@ export default function ListItem({ todoItem }) {
 const formatDate = (rawDate) => {
   const [date, time] = rawDate.split("T");
   const [year, month, day] = date.split("-");
-  //console.log(`Date: ${date}, Time: ${time}`);
-  //console.log(`Day: ${day}, Month: ${month}, Year: ${year}`);
 
   return `${day}/${month}/${year}, ${time}`;
 };
@@ -266,6 +241,4 @@ const isExpired = (date) => {
   const dateNow = Date.now();
 
   return (dateNow >= dateInUnixTime);
-
-  console.log(`Date passed: ${dateInUnixTime}, Date now: ${dateNow}`);
 }
