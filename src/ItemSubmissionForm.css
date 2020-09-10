@@ -5,6 +5,13 @@
     flex-direction: column;
 }
 
+.FormContainerMobile {
+    padding: 10px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
 .SubmitHeader {
     margin-bottom: 20px;
     margin-top: 0px;
@@ -17,6 +24,11 @@
 .SubmissionFormContents {
     display: flex;
     flex-direction: row;
+}
+
+.SubmissionFormContentsMobile {
+    display: flex;
+    flex-direction: column;
 }
 
 .SubmissionFormGroupLeft {
@@ -66,7 +78,19 @@
     margin-left: 20px;
 }
 
+.ImportantAndSubmitContainer {
+    display: flex;
+    flex-direction: row;
+}
+
 .ImportantStarContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ImportantStarContainerMobile {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -85,6 +109,7 @@
     font-size: 2em;
 }
 
+
 .FormSubmit{
     margin: 0px;
     width: 100%;
@@ -93,7 +118,15 @@
     border: 1px solid rgb(141, 153, 174);
 }
 
-.FormSubmit:hover {
+.FormSubmitMobile {
+    margin: 0px 0px 0px 20px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: rgb(237, 242, 244);
+    border: 1px solid rgb(141, 153, 174);
+}
+
+.FormSubmit:hover, .FormSubmitMobile:hover {
     background-color: rgb(242, 246, 248);
 }
 

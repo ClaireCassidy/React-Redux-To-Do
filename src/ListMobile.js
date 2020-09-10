@@ -8,7 +8,7 @@ import {
   deleteCompletedTodos,
   setAutoDeleteCompleted,
   setShowCompleted,
-  changePageNumber
+  changePageNumber  
 } from "./Actions";
 
 export default function ListMobile() {

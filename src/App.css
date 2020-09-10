@@ -1,4 +1,6 @@
 .App {
+    display: flex;
+    flex-direction: column;
     margin: 20px 60px 20px 60px;
     border: 1px dashed rgb(237, 242, 244);
     border-radius: 2%;
@@ -52,6 +54,19 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.HeaderMobile {
+    /* border: 1px solid #000; */
+    margin: 20px 0px 30px 0px;
+    color: rgb(239, 35, 60);
+    font-size: 2.5em;
+    padding-bottom: 2px;
+    /* width: 90%; */
+    justify-self: center;
+    align-self: center;
+    letter-spacing: 4px;
+    font-family: 'Roboto', sans-serif;
+}
+
 .AppBody {
     background-color: rgb(255,255,255);
     border: 2px double rgb(141, 153, 174);
@@ -75,14 +90,14 @@
     margin-left: 10px;
 }
 
-@media screen and (max-width: 490px) {
+@media screen and (max-width: 720px) {
     .App {
-        margin: 20px 20px 20px 20px;
+        margin: 80px 0px 0px 0px;
     }
 }
 
-@media screen and (max-width: 660px) {
-    .App {
-        margin: 50px 60px 20px 60px;
+@media screen and (max-width: 570px) {
+    .DemoBar {
+        font-size: 0.8em;
     }
 }

@@ -80,10 +80,10 @@ function App() {
       </div>
       <div className="App">
 
-        <h1 className="Header"> ➲ To-Do List</h1>
+        <h1 className={viewportWidth > viewBreakpoint ? "Header" : "HeaderMobile"}> ➲ To-Do List</h1>
 
         <div className="AppBody">
-          <ItemSubmissionForm />
+          <ItemSubmissionForm mobile={(viewportWidth <= viewBreakpoint)}/>
           <hr className="Divider" />
           {/* <List /> */}
           {viewportWidth > viewBreakpoint ? <ListWide /> : <ListMobile />}

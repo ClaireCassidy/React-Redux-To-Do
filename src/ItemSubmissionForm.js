@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { submitNewTodo } from "./Actions";
 import { getCurDate, getMaxDate, truncateISO } from "./utility.js"
 
-export default function ItemSubmissionForm() {
+export default function ItemSubmissionForm({mobile}) {
   const [todoText, setTodoText] = useState("");
   const [expires, setExpires] = useState(false);
   const [expiryDate, setExpiryDate] = useState(getCurDate());
@@ -56,7 +56,7 @@ export default function ItemSubmissionForm() {
   const dispatch = useDispatch();
 
   return (
-    <div className="FormContainer">
+    <div className={!mobile ? "FormContainer" : "FormContainerMobile"}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -64,7 +64,7 @@ export default function ItemSubmissionForm() {
         }}
       >
         <h3 className="SubmitHeader">Submit a new to-do:</h3>
-        <div className="SubmissionFormContents">
+        <div className={!mobile ? "SubmissionFormContents" : "SubmissionFormContentsMobile"}>
           <div className="SubmissionFormGroupLeft">
             <textarea
               className="TodoTextEntry"
@@ -102,9 +102,9 @@ export default function ItemSubmissionForm() {
             </div>
           </div>
 
-          <div className="SubmissionFormGroupRight">
+          <div className={!mobile ? "SubmissionFormGroupRight" : "ImportantAndSubmitContainer"}>
 
-            <div className="ImportantStarContainer">
+            <div className={!mobile ? "ImportantStarContainer" : "ImportantStarContainerMobile"}>
               <p className="ImportantToggle" onClick={handleImportantToggle}>
                 Important?
               </p>
@@ -114,11 +114,10 @@ export default function ItemSubmissionForm() {
               </p>
             </div>
 
-            <input className="FormSubmit" type="submit" value="Submit" />
+            <input className={!mobile ? "FormSubmit" : "FormSubmitMobile"} type="submit" value="Submit" />
           </div>
         </div>
       </form>
     </div>
   );
 }
-
