@@ -57,6 +57,10 @@
 }
 
 .PageNumberButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     font-size: 0.8em;
     background-color: rgb(237, 242, 244);
     border: 1px solid rgb(141, 153, 174);
